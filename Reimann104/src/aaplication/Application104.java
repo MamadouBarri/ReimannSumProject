@@ -19,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JSlider;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import fonction.DessinFonction;
 
 /**
  * 
@@ -30,7 +31,9 @@ public class Application104 extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtfdValeurX;
 	private JTextField txtfdValeurY;
-
+	
+	//Objet du modèle de données
+	private ModeleDonnees md = new ModeleDonnees();
 	/**
 	 * Launch the application.
 	 */
@@ -88,6 +91,14 @@ public class Application104 extends JFrame {
 		txtfdValeurY.setColumns(10);
 		txtfdValeurY.setBounds(138, 310, 66, 30);
 		pnFonction.add(txtfdValeurY);
+		
+		DessinFonction dessinFonction = new DessinFonction();
+		dessinFonction.setBounds(126, 45, 373, 243);
+		//Initialisation du modèle de données, Mamadou
+		dessinFonction.setModeleDonnees(md);
+		pnFonction.add(dessinFonction);
+		
+		
 		
 		JPanel pnParametres = new JPanel();
 		pnParametres.setBorder(new TitledBorder(null, "Param\u00E8tres", TitledBorder.LEADING, TitledBorder.TOP, null, null));
