@@ -11,6 +11,7 @@ public class ModeleDonnees {
 	private double parametreB = 1.1;
 	private double parametreC = 0.8;
 	private int nbRectangles = 10;
+	private int nbLignesBrisees = 10;
 	private int centreX = 0;
 	private int centreY = 0;
 	private int minX = -5;
@@ -56,6 +57,9 @@ public class ModeleDonnees {
 	public void setMaxY (int maxY) {
 		this.maxY = maxY;
 	}
+	public void setNbLignesBrisees(int nbLignesBrisees) {
+		this.nbLignesBrisees = nbLignesBrisees;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -87,6 +91,9 @@ public class ModeleDonnees {
 	}
 	public int getMaxY() {
 		return(this.maxY);
+	}
+	public int getNbLignesBrisees() {
+		return(this.nbLignesBrisees);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
@@ -24,7 +25,10 @@ public class DessinFonction extends JPanel {
 	private ModeleDonnees md = new ModeleDonnees();
 	//Variables locales pour le dessin
 	private Path2D.Double axes, ligneBrisee;
-	
+	private Rectangle2D.Double rect;
+	private double largeurDuRectangle;
+	private double xRectangle;
+	private double yRectangle;
 	/**
 	 * Create the panel.
 	 */
@@ -32,9 +36,11 @@ public class DessinFonction extends JPanel {
 		setPreferredSize(new Dimension(300, 200));
 		this.setBackground(Color.white);
 		setLayout(null);
+		largeurDuRectangle =  (md.getMaxX() - md.getMinX()) / (double) md.getNbRectangles();
+		xRectangle = md.getMinX();
 		//Dessin de la fonction
 	}
-	
+
 	/**
 	 * Redefinit la methode de dessin
 	 * @param g Le conexte graphique
@@ -49,40 +55,62 @@ public class DessinFonction extends JPanel {
 		double demiHauteur = getHeight()/2;
 		double pixelsParUniteX = getWidth()/(md.getMaxX()-md.getMinX());
 		double pixelsParUniteY = getHeight()/(md.getMaxY()-md.getMinY());
-		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;	
-		
+
 
 		//Transformations nécessaires pour afficher la fonction
 		g2d.translate(demiLongueur, demiHauteur);
 		AffineTransform atr = new AffineTransform();
 		atr.scale(pixelsParUniteX, pixelsParUniteY);
-		g2d.scale(-1,1);
+		g2d.scale(1,-1);
 		//Dessiner
 		g2d.setColor(Color.BLUE);
 		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setColor(Color.red);
 		g2d.draw(atr.createTransformedShape(ligneBrisee));
+		//Dessiner rectangles
+		g2d.scale(-1, 1);//Reinverser la matrice de trans.
+		g2d.setColor(Color.green);
+		for(int k =0;k<md.getNbRectangles();k++) {
+			creerUnRectangle();
+			if(yRectangle <0) {
+				g2d.scale(1, -1);
+				g2d.fill(atr.createTransformedShape(rect));
+				g2d.scale(1, -1);
+			}else {
+				g2d.fill(atr.createTransformedShape(rect));
+			}
+		}
+	}
+	public void creerUnRectangle() {
+		//Dessiner les rectangles
+		yRectangle = this.evalFonction(xRectangle);
+		int signe = 1;
+		if(yRectangle<0) {
+			signe = -1;
+		}
+		rect = new Rectangle2D.Double(-xRectangle-largeurDuRectangle/2.0,0, largeurDuRectangle, signe *yRectangle);
+		xRectangle +=largeurDuRectangle;
 	}
 	/**
 	 * La méthode crée la ligne brisée qui va approximmer l'allure de la fonction
 	 */
 	private void creerApproxCourbe() {
 		double x,y;
-		double nombreDeRectangles = md.getNbRectangles();
+		double nbLignesBrisees = md.getNbLignesBrisees();
 		ligneBrisee = new Path2D.Double();
 		x = md.getMinX();
 		y = this.evalFonction(x);
 		//Tracer l'approximation
 		ligneBrisee.moveTo(x, y);
-		for(int k =1; k<=nombreDeRectangles ;k++) {
-			x = md.getMinX() + k * (md.getMaxX()-md.getMinX())/nombreDeRectangles;
+		for(int k =1; k<=nbLignesBrisees ;k++) {
+			x = md.getMinX() + k * (md.getMaxX()-md.getMinX())/nbLignesBrisees;
 			y = this.evalFonction(x);
 			ligneBrisee.lineTo(x, y);
 		}
 	}
-	
+
 	/**
 	 * La méthode crée les axes de la fonction 
 	 */
@@ -98,7 +126,7 @@ public class DessinFonction extends JPanel {
 		axes.moveTo(0, md.getMinY());
 		axes.lineTo(0, md.getMaxY());
 	}
-	
+
 	/**
 	 * Cette méthode change le pointeur du modèle de données
 	 * @param md Le modele de données universel qui sera passé en paramètre dans la classe Application104
