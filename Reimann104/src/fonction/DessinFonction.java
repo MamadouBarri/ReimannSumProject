@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
@@ -12,7 +13,7 @@ import javax.swing.JPanel;
 
 import aaplication.ModeleDonnees;
 /**
- * Cette zone de dessin dessine la fonction et ses axes
+ * Dans cette classe on dessine la fonction, ses axes, les rectangles de la somme de Reimann et les graduations
  * @author Mamadou Barri
  *
  */
@@ -35,9 +36,8 @@ public class DessinFonction extends JPanel {
 	public DessinFonction() {
 		setPreferredSize(new Dimension(300, 200));
 		this.setBackground(Color.white);
-		setLayout(null);
 		largeurDuRectangle =  (md.getMaxX() - md.getMinX()) / (double) md.getNbRectangles();
-		xRectangle = md.getMinX();
+		setLayout(null);
 		//Dessin de la fonction
 	}
 
@@ -55,6 +55,7 @@ public class DessinFonction extends JPanel {
 		double demiHauteur = getHeight()/2;
 		double pixelsParUniteX = getWidth()/(md.getMaxX()-md.getMinX());
 		double pixelsParUniteY = getHeight()/(md.getMaxY()-md.getMinY());
+		xRectangle = md.getMinX() + largeurDuRectangle/2.0;
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;	
 
@@ -65,13 +66,13 @@ public class DessinFonction extends JPanel {
 		atr.scale(pixelsParUniteX, pixelsParUniteY);
 		g2d.scale(1,-1);
 		//Dessiner
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON  );   //Adoucissement des contours
 		g2d.setColor(Color.BLUE);
 		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setColor(Color.red);
 		g2d.draw(atr.createTransformedShape(ligneBrisee));
 		//Dessiner rectangles
-		g2d.scale(-1, 1);//Reinverser la matrice de trans.
-		g2d.setColor(Color.green);
+		g2d.setColor(Color.PINK);
 		for(int k =0;k<md.getNbRectangles();k++) {
 			creerUnRectangle();
 			if(yRectangle <0) {
@@ -90,7 +91,7 @@ public class DessinFonction extends JPanel {
 		if(yRectangle<0) {
 			signe = -1;
 		}
-		rect = new Rectangle2D.Double(-xRectangle-largeurDuRectangle/2.0,0, largeurDuRectangle, signe *yRectangle);
+		rect = new Rectangle2D.Double(xRectangle - largeurDuRectangle/2.0,0, largeurDuRectangle, signe *yRectangle);
 		xRectangle +=largeurDuRectangle;
 	}
 	/**

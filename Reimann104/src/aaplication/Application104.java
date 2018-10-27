@@ -93,9 +93,7 @@ public class Application104 extends JFrame {
 		pnFonction.add(txtfdValeurY);
 		
 		DessinFonction dessinFonction = new DessinFonction();
-		dessinFonction.setBounds(126, 45, 373, 243);
-		//Initialisation du modèle de données, Mamadou
-		dessinFonction.setModeleDonnees(md);
+		dessinFonction.setBounds(58, 30, 474, 252);
 		pnFonction.add(dessinFonction);
 		
 		
