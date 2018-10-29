@@ -68,10 +68,6 @@ public class Application104 extends JFrame {
 		contentPane.add(pnFonction);
 		pnFonction.setLayout(null);
 		
-		JButton btnResetFonction = new JButton("R\u00E9initialiser la Fonction");
-		btnResetFonction.setBounds(381, 310, 209, 34);
-		pnFonction.add(btnResetFonction);
-		
 		txtfdValeurX = new JTextField();
 		txtfdValeurX.setBounds(36, 310, 66, 30);
 		pnFonction.add(txtfdValeurX);
@@ -95,6 +91,15 @@ public class Application104 extends JFrame {
 		DessinFonction dessinFonction = new DessinFonction();
 		dessinFonction.setBounds(58, 30, 474, 252);
 		pnFonction.add(dessinFonction);
+		
+		JButton btnResetFonction = new JButton("R\u00E9initialiser la Fonction");
+		btnResetFonction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.resetTranslation();
+			}
+		});
+		btnResetFonction.setBounds(381, 310, 209, 34);
+		pnFonction.add(btnResetFonction);
 		
 		JButton btnDroite = new JButton("Droite");
 		btnDroite.addActionListener(new ActionListener() {

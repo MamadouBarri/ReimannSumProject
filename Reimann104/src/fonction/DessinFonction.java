@@ -173,5 +173,15 @@ public class DessinFonction extends JPanel {
 		this.valeurDeTranslationEnY = this.valeurDeTranslationEnY+pixelsParUniteY*y;
 		repaint();
 	}
+	
+	public void resetTranslation() {
+		this.maxX = md.getMaxX();
+		this.minX = md.getMinX();
+		this.maxY = md.getMaxY();
+		this.minY = md.getMinY();
+		valeurDeTranslationEnX = 0;
+		valeurDeTranslationEnY = 0;
+		repaint();
+	}
 
 }
