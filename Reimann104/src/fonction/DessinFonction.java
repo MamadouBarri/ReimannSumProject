@@ -30,13 +30,16 @@ public class DessinFonction extends JPanel {
 	private double largeurDuRectangle;
 	private double xRectangle;
 	private double yRectangle;
+	private int maxX = md.getMaxX(), minX = md.getMinY();
+	private int maxY = md.getMaxY(), minY = md.getMinY();
+	private double valeurDeTranslationEnX;
+	private double valeurDeTranslationEnY;
 	/**
 	 * Create the panel.
 	 */
 	public DessinFonction() {
 		setPreferredSize(new Dimension(300, 200));
 		this.setBackground(Color.white);
-		largeurDuRectangle =  (md.getMaxX() - md.getMinX()) / (double) md.getNbRectangles();
 		setLayout(null);
 		//Dessin de la fonction
 	}
@@ -51,11 +54,12 @@ public class DessinFonction extends JPanel {
 		creerAxes();
 		creerApproxCourbe();
 		//Variables calculé à chaque repaint
-		double demiLongueur = getWidth()/2;
-		double demiHauteur = getHeight()/2;
-		double pixelsParUniteX = getWidth()/(md.getMaxX()-md.getMinX());
-		double pixelsParUniteY = getHeight()/(md.getMaxY()-md.getMinY());
-		xRectangle = md.getMinX() + largeurDuRectangle/2.0;
+		largeurDuRectangle =  (maxX - minX) / (double) md.getNbRectangles();
+		double demiLongueur = getWidth()/2+valeurDeTranslationEnX;
+		double demiHauteur = getHeight()/2+valeurDeTranslationEnY;
+		double pixelsParUniteX = getWidth()/(maxX-minX);
+		double pixelsParUniteY = getHeight()/(maxY-minY);
+		xRectangle = minX + largeurDuRectangle/2.0;
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;	
 
@@ -101,12 +105,12 @@ public class DessinFonction extends JPanel {
 		double x,y;
 		double nbLignesBrisees = md.getNbLignesBrisees();
 		ligneBrisee = new Path2D.Double();
-		x = md.getMinX();
+		x = minX;
 		y = this.evalFonction(x);
 		//Tracer l'approximation
 		ligneBrisee.moveTo(x, y);
 		for(int k =1; k<=nbLignesBrisees ;k++) {
-			x = md.getMinX() + k * (md.getMaxX()-md.getMinX())/nbLignesBrisees;
+			x = minX + k * (maxX-minX)/nbLignesBrisees;
 			y = this.evalFonction(x);
 			ligneBrisee.lineTo(x, y);
 		}
@@ -121,11 +125,11 @@ public class DessinFonction extends JPanel {
 		//Axes
 		axes = new Path2D.Double();
 		//Ligne horizontale
-		axes.moveTo(md.getMinX(), 0);
-		axes.lineTo(md.getMaxX(), 0);
+		axes.moveTo(minX, 0);
+		axes.lineTo(maxX, 0);
 		//Ligne verticale
-		axes.moveTo(0, md.getMinY());
-		axes.lineTo(0, md.getMaxY());
+		axes.moveTo(0, minY);
+		axes.lineTo(0, maxY);
 	}
 
 	/**
@@ -143,6 +147,31 @@ public class DessinFonction extends JPanel {
 	 */
 	private double evalFonction(double x) {
 		return(md.getParametreA() * Math.cos(x) + md.getParametreB() * Math.sin(x) + md.getParametreC());
+	}
+	
+	/**
+	 * Cette méthode premet la translation de la fonction sur l'axe des x
+	 * @author Gayta
+	 */
+	
+	public void translationEnX(int x) {
+		//changement de la partie de la fonction dessinée
+		this.maxX = this.maxX+x;
+		this.minX = this.minX+x;
+		//changement de la position de centre du dessin
+		double pixelsParUniteX = getWidth()/(minX-maxX);
+		this.valeurDeTranslationEnX = this.valeurDeTranslationEnX+pixelsParUniteX*x;
+		repaint();
+	}
+	
+	public void translationEnY(int y) {
+		//changement de la partie de la fonction dessinée
+		this.maxY = this.maxY+y;
+		this.minY = this.minY+y;
+		//changement de la position de centre du dessin
+		double pixelsParUniteY = getHeight()/(maxY-minY);
+		this.valeurDeTranslationEnY = this.valeurDeTranslationEnY+pixelsParUniteY*y;
+		repaint();
 	}
 
 }

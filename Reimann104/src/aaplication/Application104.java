@@ -96,6 +96,42 @@ public class Application104 extends JFrame {
 		dessinFonction.setBounds(58, 30, 474, 252);
 		pnFonction.add(dessinFonction);
 		
+		JButton btnDroite = new JButton("Droite");
+		btnDroite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.translationEnX(1);
+			}
+		});
+		btnDroite.setBounds(460, 286, 89, 23);
+		pnFonction.add(btnDroite);
+		
+		JButton btnGauche = new JButton("Gauche");
+		btnGauche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.translationEnX(-1);
+			}
+		});
+		btnGauche.setBounds(58, 286, 89, 23);
+		pnFonction.add(btnGauche);
+		
+		JButton btnHaut = new JButton("Haut");
+		btnHaut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.translationEnY(1);
+			}
+		});
+		btnHaut.setBounds(532, 30, 68, 23);
+		pnFonction.add(btnHaut);
+		
+		JButton btnBas = new JButton("Bas");
+		btnBas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.translationEnY(-1);
+			}
+		});
+		btnBas.setBounds(532, 259, 68, 23);
+		pnFonction.add(btnBas);
+		
 		
 		
 		JPanel pnParametres = new JPanel();
