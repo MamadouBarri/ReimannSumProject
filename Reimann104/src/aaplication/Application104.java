@@ -137,6 +137,26 @@ public class Application104 extends JFrame {
 		btnBas.setBounds(532, 259, 68, 23);
 		pnFonction.add(btnBas);
 		
+		JButton btnZoonin = new JButton("+");
+		btnZoonin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.zoom(-1);
+			}
+		});
+		btnZoonin.setFont(new Font("Tahoma", Font.PLAIN, 35));
+		btnZoonin.setBounds(0, 30, 60, 80);
+		pnFonction.add(btnZoonin);
+		
+		JButton btnZoomout = new JButton("-");
+		btnZoomout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.zoom(+1);
+			}
+		});
+		btnZoomout.setFont(new Font("Tahoma", Font.PLAIN, 35));
+		btnZoomout.setBounds(0, 202, 60, 80);
+		pnFonction.add(btnZoomout);
+		
 		
 		
 		JPanel pnParametres = new JPanel();

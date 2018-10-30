@@ -25,15 +25,20 @@ public class DessinFonction extends JPanel {
 	//Object du modele de données
 	private ModeleDonnees md = new ModeleDonnees();
 	//Variables locales pour le dessin
-	private Path2D.Double axes, ligneBrisee;
+	private Path2D.Double axes, ligneBrisee,bonds;
 	private Rectangle2D.Double rect;
 	private double largeurDuRectangle;
 	private double xRectangle;
 	private double yRectangle;
-	private int maxX = md.getMaxX(), minX = md.getMinY();
-	private int maxY = md.getMaxY(), minY = md.getMinY();
+	private double maxX = md.getMaxX(), minX = md.getMinY();
+	private double maxY = md.getMaxY(), minY = md.getMinY();
 	private double valeurDeTranslationEnX;
 	private double valeurDeTranslationEnY;
+	private double valeurDuZoom;
+	private double valeurDuZoomEnX;
+	private double valeurDuZoomEnY;
+	private double pixelsParUniteX;
+	private double pixelsParUniteY;
 	/**
 	 * Create the panel.
 	 */
@@ -53,12 +58,13 @@ public class DessinFonction extends JPanel {
 		//Appel des méthodes à chaque repaint
 		creerAxes();
 		creerApproxCourbe();
+		creerBonds();
 		//Variables calculé à chaque repaint
 		largeurDuRectangle =  (maxX - minX) / (double) md.getNbRectangles();
-		double demiLongueur = getWidth()/2+valeurDeTranslationEnX;
+		double demiLongueur = getWidth()/2-valeurDeTranslationEnX;
 		double demiHauteur = getHeight()/2+valeurDeTranslationEnY;
-		double pixelsParUniteX = getWidth()/(maxX-minX);
-		double pixelsParUniteY = getHeight()/(maxY-minY);
+		this.pixelsParUniteX = getWidth()/(maxX-minX);
+		this.pixelsParUniteY = getHeight()/(maxY-minY);
 		xRectangle = minX + largeurDuRectangle/2.0;
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;	
@@ -71,6 +77,8 @@ public class DessinFonction extends JPanel {
 		g2d.scale(1,-1);
 		//Dessiner
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON  );   //Adoucissement des contours
+		g2d.setColor(Color.LIGHT_GRAY);
+		g2d.draw(atr.createTransformedShape(bonds));
 		g2d.setColor(Color.BLUE);
 		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setColor(Color.red);
@@ -104,6 +112,8 @@ public class DessinFonction extends JPanel {
 	private void creerApproxCourbe() {
 		double x,y;
 		double nbLignesBrisees = md.getNbLignesBrisees();
+		double minX = this.minX ;
+		double maxX = this.maxX ;
 		ligneBrisee = new Path2D.Double();
 		x = minX;
 		y = this.evalFonction(x);
@@ -131,6 +141,16 @@ public class DessinFonction extends JPanel {
 		axes.moveTo(0, minY);
 		axes.lineTo(0, maxY);
 	}
+	
+	private void creerBonds() {
+		bonds = new Path2D.Double();
+		double posX = minX;
+		for (int k=0;k<=maxX-minX;k++) {
+			bonds.moveTo(posX, maxY);
+			bonds.lineTo(posX, minY);
+			posX += 1;
+		}
+	}
 
 	/**
 	 * Cette méthode change le pointeur du modèle de données
@@ -156,21 +176,19 @@ public class DessinFonction extends JPanel {
 	
 	public void translationEnX(int x) {
 		//changement de la partie de la fonction dessinée
-		this.maxX = this.maxX+x;
-		this.minX = this.minX+x;
+		this.maxX += x;
+		this.minX += x;
 		//changement de la position de centre du dessin
-		double pixelsParUniteX = getWidth()/(minX-maxX);
-		this.valeurDeTranslationEnX = this.valeurDeTranslationEnX+pixelsParUniteX*x;
+		this.valeurDeTranslationEnX += this.pixelsParUniteX*x;
 		repaint();
 	}
 	
 	public void translationEnY(int y) {
 		//changement de la partie de la fonction dessinée
-		this.maxY = this.maxY+y;
-		this.minY = this.minY+y;
+		this.maxY += y;
+		this.minY += y;
 		//changement de la position de centre du dessin
-		double pixelsParUniteY = getHeight()/(maxY-minY);
-		this.valeurDeTranslationEnY = this.valeurDeTranslationEnY+pixelsParUniteY*y;
+		this.valeurDeTranslationEnY += this.pixelsParUniteY*y;
 		repaint();
 	}
 	
@@ -181,6 +199,24 @@ public class DessinFonction extends JPanel {
 		this.minY = md.getMinY();
 		valeurDeTranslationEnX = 0;
 		valeurDeTranslationEnY = 0;
+		repaint();
+	}
+	
+	public void zoom(double z) {
+		this.maxX += z;
+		this.minX -= z;
+		//Vu qu'on utilise cette équation comme un diviseur, ce "if" prévient une divison par zéro
+		if(maxX-minX == 0) {
+			this.maxX -= z;
+			this.minX += z;
+		}
+		this.maxY += z;
+		this.minY -= z;
+		//Vu qu'on utilise cette équation comme un diviseur, ce "if" prévient une divison par zéro
+		if(maxY-minY == 0) {
+			this.maxY -= z;
+			this.minY += z;
+		}
 		repaint();
 	}
 
