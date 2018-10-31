@@ -25,7 +25,7 @@ public class DessinFonction extends JPanel {
 	//Object du modele de données
 	private ModeleDonnees md = new ModeleDonnees();
 	//Variables locales pour le dessin
-	private Path2D.Double axes, ligneBrisee,bonds;
+	private Path2D.Double axes, ligneBrisee,grille;
 	private Rectangle2D.Double rect;
 	private double largeurDuRectangle;
 	private double xRectangle;
@@ -39,6 +39,7 @@ public class DessinFonction extends JPanel {
 	private double valeurDuZoomEnY;
 	private double pixelsParUniteX;
 	private double pixelsParUniteY;
+	private double posX;
 	/**
 	 * Create the panel.
 	 */
@@ -58,27 +59,28 @@ public class DessinFonction extends JPanel {
 		//Appel des méthodes à chaque repaint
 		creerAxes();
 		creerApproxCourbe();
-		creerBonds();
+		creerGrille();
 		//Variables calculé à chaque repaint
 		largeurDuRectangle =  (maxX - minX) / (double) md.getNbRectangles();
-		double demiLongueur = getWidth()/2-valeurDeTranslationEnX;
-		double demiHauteur = getHeight()/2+valeurDeTranslationEnY;
+		double demiLongueur = getWidth()/2;
+		double demiHauteur = getHeight()/2;
 		this.pixelsParUniteX = getWidth()/(maxX-minX);
 		this.pixelsParUniteY = getHeight()/(maxY-minY);
 		xRectangle = minX + largeurDuRectangle/2.0;
+		posX = (minX-maxX)/2 + largeurDuRectangle/2.0;
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;	
 
 
 		//Transformations nécessaires pour afficher la fonction
-		g2d.translate(demiLongueur, demiHauteur);
+	    g2d.translate(demiLongueur, demiHauteur);
 		AffineTransform atr = new AffineTransform();
 		atr.scale(pixelsParUniteX, pixelsParUniteY);
 		g2d.scale(1,-1);
 		//Dessiner
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON  );   //Adoucissement des contours
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.draw(atr.createTransformedShape(bonds));
+		g2d.draw(atr.createTransformedShape(grille));
 		g2d.setColor(Color.BLUE);
 		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setColor(Color.red);
@@ -103,8 +105,9 @@ public class DessinFonction extends JPanel {
 		if(yRectangle<0) {
 			signe = -1;
 		}
-		rect = new Rectangle2D.Double(xRectangle - largeurDuRectangle/2.0,0, largeurDuRectangle, signe *yRectangle);
+		rect = new Rectangle2D.Double(posX - largeurDuRectangle/2.0,signe*valeurDeTranslationEnY, largeurDuRectangle, signe *yRectangle);
 		xRectangle +=largeurDuRectangle;
+		posX +=largeurDuRectangle;
 	}
 	/**
 	 * La méthode crée la ligne brisée qui va approximmer l'allure de la fonction
@@ -114,15 +117,18 @@ public class DessinFonction extends JPanel {
 		double nbLignesBrisees = md.getNbLignesBrisees();
 		double minX = this.minX ;
 		double maxX = this.maxX ;
+		double posX = this.minX ;
 		ligneBrisee = new Path2D.Double();
 		x = minX;
+		posX = (minX-maxX)/2;
 		y = this.evalFonction(x);
 		//Tracer l'approximation
-		ligneBrisee.moveTo(x, y);
+		ligneBrisee.moveTo(posX, y+valeurDeTranslationEnY);
 		for(int k =1; k<=nbLignesBrisees ;k++) {
 			x = minX + k * (maxX-minX)/nbLignesBrisees;
+			posX =(minX-maxX)/2+ k * (maxX-minX)/nbLignesBrisees;
 			y = this.evalFonction(x);
-			ligneBrisee.lineTo(x, y);
+			ligneBrisee.lineTo(posX, y+valeurDeTranslationEnY);
 		}
 	}
 
@@ -131,24 +137,34 @@ public class DessinFonction extends JPanel {
 	 */
 	private void creerAxes() {
 		//Variables
-
+		double posX = (minX-maxX)/2;
+		double posY = (minY-maxY)/2;
 		//Axes
 		axes = new Path2D.Double();
 		//Ligne horizontale
-		axes.moveTo(minX, 0);
-		axes.lineTo(maxX, 0);
+		axes.moveTo(posX, valeurDeTranslationEnY);
+		axes.lineTo(-posX, valeurDeTranslationEnY);
 		//Ligne verticale
-		axes.moveTo(0, minY);
-		axes.lineTo(0, maxY);
+		axes.moveTo(0-valeurDeTranslationEnX,posY);
+		axes.lineTo(0-valeurDeTranslationEnX,-posY);
 	}
 	
-	private void creerBonds() {
-		bonds = new Path2D.Double();
-		double posX = minX;
+	/**
+	 * Méthode pour créer la grille
+	 */
+	private void creerGrille() {
+		grille = new Path2D.Double();
+		double posX = (minX-maxX)/2;
 		for (int k=0;k<=maxX-minX;k++) {
-			bonds.moveTo(posX, maxY);
-			bonds.lineTo(posX, minY);
+			grille.moveTo(posX, -(minY-maxY)/2);
+			grille.lineTo(posX, (minY-maxY)/2);
 			posX += 1;
+		}
+		double posY = (minY-maxY)/2;
+		for (int i=0;i<=maxX-minX;i++) {
+			grille.moveTo((minX-maxX)/2, posY);
+			grille.lineTo(-(minX-maxX)/2, posY);
+			posY += 1;
 		}
 	}
 
@@ -179,7 +195,7 @@ public class DessinFonction extends JPanel {
 		this.maxX += x;
 		this.minX += x;
 		//changement de la position de centre du dessin
-		this.valeurDeTranslationEnX += this.pixelsParUniteX*x;
+		this.valeurDeTranslationEnX += x;
 		repaint();
 	}
 	
@@ -188,7 +204,7 @@ public class DessinFonction extends JPanel {
 		this.maxY += y;
 		this.minY += y;
 		//changement de la position de centre du dessin
-		this.valeurDeTranslationEnY += this.pixelsParUniteY*y;
+		this.valeurDeTranslationEnY -= y;
 		repaint();
 	}
 	
