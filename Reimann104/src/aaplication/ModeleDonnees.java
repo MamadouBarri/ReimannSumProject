@@ -60,6 +60,9 @@ public class ModeleDonnees {
 	public void setNbLignesBrisees(int nbLignesBrisees) {
 		this.nbLignesBrisees = nbLignesBrisees;
 	}
+	public void setAireAlg(double aireAlg) {
+		this.aireAlg = aireAlg;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -94,6 +97,11 @@ public class ModeleDonnees {
 	}
 	public int getNbLignesBrisees() {
 		return(this.nbLignesBrisees);
+	}
+	public double getAireAlg() {
+		double aireRectangles = (-this.parametreA * Math.cos(this.maxX) + this.parametreB * Math.sin(this.maxX) + this.parametreC * this.maxX) - (-this.parametreA * Math.cos(this.minX) 
+				+ this.parametreB * Math.sin(this.minX) + this.parametreC * this.minX);
+		return(aireRectangles);
 	}
 	
 	//Recalculer les données 
