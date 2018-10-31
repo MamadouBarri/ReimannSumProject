@@ -22,8 +22,8 @@ import java.awt.event.ActionEvent;
 import fonction.DessinFonction;
 
 /**
- * 
- * @author 
+ * Classe de l'application qui affiche une fonction et calcule son aire sous la courbe avec la somme de Reimann
+ * @author Mamadou Barri et Gayta, Reiner Luis
  *
  */
 public class Application104 extends JFrame {
@@ -35,7 +35,7 @@ public class Application104 extends JFrame {
 	//Objet du modèle de données
 	private ModeleDonnees md = new ModeleDonnees();
 	/**
-	 * Launch the application.
+	 * Demarrage de l'application
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -51,8 +51,9 @@ public class Application104 extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Constructeur qui génère l'inferface de l'applicaiton
 	 */
+	//Reiner
 	public Application104() {
 		setTitle("Somme de Reimann");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -234,4 +235,5 @@ public class Application104 extends JFrame {
 		lblPourEcart.setBounds(10, 261, 305, 76);
 		panel.add(lblPourEcart);
 	}
+	//Methodes pour les autres ecouters en private
 }

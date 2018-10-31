@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 
 import aaplication.ModeleDonnees;
 /**
- * Dans cette classe on dessine la fonction, ses axes, les rectangles de la somme de Reimann et les graduations
- * @author Mamadou Barri
+ * Composant de dessin pour representer la fonction, ses axes, les rectangles de la somme de Reimann et les graduations
+ * @author Barri, Mamadou et Gayta, Reiner
  *
  */
 public class DessinFonction extends JPanel {
@@ -40,7 +40,7 @@ public class DessinFonction extends JPanel {
 	private double pixelsParUniteX;
 	private double pixelsParUniteY;
 	/**
-	 * Create the panel.
+	 * Constructeur : crée la zone de dessin
 	 */
 	public DessinFonction() {
 		setPreferredSize(new Dimension(300, 200));
@@ -50,7 +50,7 @@ public class DessinFonction extends JPanel {
 	}
 
 	/**
-	 * Redefinit la methode de dessin
+	 * Dessine la fonction...
 	 * @param g Le conexte graphique
 	 */
 	@Override
@@ -71,6 +71,10 @@ public class DessinFonction extends JPanel {
 
 
 		//Transformations nécessaires pour afficher la fonction
+		int signe = 1;
+		if(valeurDeTranslationEnX <0) {
+			signe = -1;
+		}
 		g2d.translate(demiLongueur, demiHauteur);
 		AffineTransform atr = new AffineTransform();
 		atr.scale(pixelsParUniteX, pixelsParUniteY);
@@ -109,6 +113,7 @@ public class DessinFonction extends JPanel {
 	/**
 	 * La méthode crée la ligne brisée qui va approximmer l'allure de la fonction
 	 */
+	//Mamadou
 	private void creerApproxCourbe() {
 		double x,y;
 		double nbLignesBrisees = md.getNbLignesBrisees();
@@ -129,6 +134,7 @@ public class DessinFonction extends JPanel {
 	/**
 	 * La méthode crée les axes de la fonction 
 	 */
+	//Mamadou
 	private void creerAxes() {
 		//Variables
 
@@ -156,6 +162,7 @@ public class DessinFonction extends JPanel {
 	 * Cette méthode change le pointeur du modèle de données
 	 * @param md Le modele de données universel qui sera passé en paramètre dans la classe Application104
 	 */
+	//Mamadou
 	public void setModeleDonnees(ModeleDonnees md) {
 		this.md = md;
 		repaint();
@@ -165,15 +172,16 @@ public class DessinFonction extends JPanel {
 	 * @param x
 	 * @return Le y de la fonction
 	 */
+	//Mamadou
 	private double evalFonction(double x) {
 		return(md.getParametreA() * Math.cos(x) + md.getParametreB() * Math.sin(x) + md.getParametreC());
 	}
 	
 	/**
 	 * Cette méthode premet la translation de la fonction sur l'axe des x
-	 * @author Gayta
+	 * @param x translation en horizontale
 	 */
-	
+	//Gayta
 	public void translationEnX(int x) {
 		//changement de la partie de la fonction dessinée
 		this.maxX += x;

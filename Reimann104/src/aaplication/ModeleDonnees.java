@@ -1,7 +1,7 @@
 package aaplication;
 /**
  * Classe qui comprends toutes les données, leurs getters et leurs setters
- * @author Mamadou et Reiner
+ * @author Mamadou Barri et Gayta, Reiner
  *
  */
 public class ModeleDonnees {
@@ -26,7 +26,7 @@ public class ModeleDonnees {
 	private double difference;
 	private double pourcentageEcart;
 	
-	//Setters
+	//Setters avec 
 	public void setParametreA (double parametreA) {
 		this.parametreA = parametreA;
 	}
@@ -95,5 +95,8 @@ public class ModeleDonnees {
 	public int getNbLignesBrisees() {
 		return(this.nbLignesBrisees);
 	}
+	
+	//Recalculer les données 
+	// nbRecet --> recalculer longueur rect, recalculer laire etc..
 
 }
