@@ -10,9 +10,13 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.border.TitledBorder;
+import javax.print.DocFlavor.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
@@ -31,6 +35,12 @@ public class Application104 extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtfdValeurX;
 	private JTextField txtfdValeurY;
+	private java.net.URL  urlHaut = getClass().getClassLoader().getResource("a_haut.png");
+	private java.net.URL  urlBas = getClass().getClassLoader().getResource("a_bas.png");
+	private java.net.URL  urlGauche = getClass().getClassLoader().getResource("a_gauche.png");
+	private java.net.URL  urlDroite = getClass().getClassLoader().getResource("a_droite.png");
+	private java.net.URL  urlZoomIn = getClass().getClassLoader().getResource("ZoomIn (1).png");
+	private java.net.URL  urlZoomOut = getClass().getClassLoader().getResource("ZoomOut (1).png");
 	
 	//Objet du modèle de données
 	private ModeleDonnees md = new ModeleDonnees();
@@ -70,23 +80,23 @@ public class Application104 extends JFrame {
 		pnFonction.setLayout(null);
 		
 		txtfdValeurX = new JTextField();
-		txtfdValeurX.setBounds(26, 658, 40, 30);
+		txtfdValeurX.setBounds(24, 673, 40, 30);
 		pnFonction.add(txtfdValeurX);
 		txtfdValeurX.setColumns(10);
 		
 		JLabel lblValeurX = new JLabel("X:");
 		lblValeurX.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblValeurX.setBounds(6, 658, 16, 25);
+		lblValeurX.setBounds(6, 673, 16, 25);
 		pnFonction.add(lblValeurX);
 		
 		JLabel lblValeurY = new JLabel("Y:");
 		lblValeurY.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblValeurY.setBounds(72, 658, 16, 25);
+		lblValeurY.setBounds(74, 673, 16, 25);
 		pnFonction.add(lblValeurY);
 		
 		txtfdValeurY = new JTextField();
 		txtfdValeurY.setColumns(10);
-		txtfdValeurY.setBounds(90, 658, 40, 30);
+		txtfdValeurY.setBounds(91, 673, 40, 30);
 		pnFonction.add(txtfdValeurY);
 		
 		DessinFonction dessinFonction = new DessinFonction();
@@ -94,13 +104,18 @@ public class Application104 extends JFrame {
 		dessinFonction.setBounds(72, 11, 600, 600);
 		pnFonction.add(dessinFonction);
 		
-		JButton btnDroite = new JButton("Droite");
+		if(urlDroite == null) {
+			JOptionPane.showMessageDialog(null, "Fichier a_droite.png introuvable");
+			System.exit(0);
+		}
+		ImageIcon droite = new ImageIcon(urlDroite);
+		JButton btnDroite = new JButton(droite);
 		btnDroite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnX(1);
 			}
 		});
-		btnDroite.setBounds(583, 622, 89, 23);
+		btnDroite.setBounds(632, 615, 40, 40);
 		pnFonction.add(btnDroite);
 		
 		JButton btnResetFonction = new JButton("R\u00E9initialiser la Fonction");
@@ -109,55 +124,80 @@ public class Application104 extends JFrame {
 				dessinFonction.resetTranslation();
 			}
 		});
-		btnResetFonction.setBounds(562, 656, 209, 34);
+		btnResetFonction.setBounds(562, 666, 209, 34);
 		pnFonction.add(btnResetFonction);
 		
-		JButton btnGauche = new JButton("Gauche");
+		if(urlGauche == null) {
+			JOptionPane.showMessageDialog(null, "Fichier a_gauche.png introuvable");
+			System.exit(0);
+		}
+		ImageIcon gauche = new ImageIcon(urlGauche);
+		JButton btnGauche = new JButton(gauche);
 		btnGauche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnX(-1);
 			}
 		});
-		btnGauche.setBounds(68, 622, 89, 23);
+		btnGauche.setBounds(74, 615, 40, 40);
 		pnFonction.add(btnGauche);
 		
-		JButton btnHaut = new JButton("Haut");
+		if(urlHaut == null) {
+			JOptionPane.showMessageDialog(null, "Fichier a_haut.png introuvable");
+			System.exit(0);
+		}
+		ImageIcon haut = new ImageIcon(urlHaut);
+		JButton btnHaut = new JButton(haut);
 		btnHaut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnY(1);
 			}
 		});
-		btnHaut.setBounds(682, 11, 68, 23);
+		btnHaut.setBounds(682, 11, 40, 40);
 		pnFonction.add(btnHaut);
 		
-		JButton btnBas = new JButton("Bas");
+		if(urlBas == null) {
+			JOptionPane.showMessageDialog(null, "Fichier a_bas.png introuvable");
+			System.exit(0);
+		}
+		ImageIcon bas = new ImageIcon(urlBas);
+		JButton btnBas = new JButton(bas);
 		btnBas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnY(-1);
 			}
 		});
-		btnBas.setBounds(682, 588, 68, 23);
+		btnBas.setBounds(682, 569, 40, 40);
 		pnFonction.add(btnBas);
 		
-		JButton btnZoonin = new JButton("+");
+		if(urlZoomIn == null) {
+			JOptionPane.showMessageDialog(null, "Fichier ZoomIn.png introuvable");
+			System.exit(0);
+		}
+		ImageIcon ZoomIn = new ImageIcon(urlZoomIn);
+		JButton btnZoonin = new JButton(ZoomIn);
 		btnZoonin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.zoom(-1);
 			}
 		});
 		btnZoonin.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		btnZoonin.setBounds(6, 11, 60, 80);
+		btnZoonin.setBounds(24, 27, 40, 40);
 		pnFonction.add(btnZoonin);
 		
-		JButton btnZoomout = new JButton("-");
-		btnZoomout.addActionListener(new ActionListener() {
+		if(urlZoomOut == null) {
+			JOptionPane.showMessageDialog(null, "Fichier ZoomOut.png introuvable");
+			System.exit(0);
+		}
+		ImageIcon ZoomOut = new ImageIcon(urlZoomOut);
+		JButton btnZoomOut = new JButton(ZoomOut);
+		btnZoomOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.zoom(+1);
 			}
 		});
-		btnZoomout.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		btnZoomout.setBounds(10, 531, 60, 80);
-		pnFonction.add(btnZoomout);
+		btnZoomOut.setFont(new Font("Tahoma", Font.PLAIN, 35));
+		btnZoomOut.setBounds(24, 551, 40, 40);
+		pnFonction.add(btnZoomOut);
 		
 		
 		
