@@ -63,6 +63,9 @@ public class ModeleDonnees {
 	public void setAireAlg(double aireAlg) {
 		this.aireAlg = aireAlg;
 	}
+	public void setAireGeo(double aireGeo) {
+		this.aireGeo = aireGeo;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -99,9 +102,21 @@ public class ModeleDonnees {
 		return(this.nbLignesBrisees);
 	}
 	public double getAireAlg() {
-		double aireRectangles = (-this.parametreA * Math.cos(this.maxX) + this.parametreB * Math.sin(this.maxX) + this.parametreC * this.maxX) - (-this.parametreA * Math.cos(this.minX) 
+		double aireAlgebrique = (-this.parametreA * Math.cos(this.maxX) + this.parametreB * Math.sin(this.maxX) + this.parametreC * this.maxX) - (-this.parametreA * Math.cos(this.minX) 
 				+ this.parametreB * Math.sin(this.minX) + this.parametreC * this.minX);
-		return(aireRectangles);
+		return(aireAlgebrique);
+	}
+	public double getAireGeo() {
+		double largeurRect = (this.maxX - this.minX)/this.nbRectangles;
+		double aireTotale = 0;
+		double y;
+		double x = this.minX +  largeurRect/2.0;
+		for(int k= 0;k<this.nbRectangles;k++) {
+			y = this.parametreA*Math.cos(x) + this.parametreB* Math.sin(x) + this.parametreC;
+			aireTotale += y * largeurRect;
+			x+=largeurRect;
+		}
+		return(aireTotale);
 	}
 	
 	//Recalculer les données 
