@@ -10,7 +10,7 @@ public class ModeleDonnees {
 	private double parametreA = 2.4;
 	private double parametreB = 1.1;
 	private double parametreC = 0.8;
-	private int nbRectangles = 100;
+	private int nbRectangles = 10;
 	private int nbLignesBrisees = 100;
 	private int centreX = 0;
 	private int centreY = 0;

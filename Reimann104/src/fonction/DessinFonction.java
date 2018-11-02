@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import aaplication.ModeleDonnees;
@@ -60,6 +61,7 @@ public class DessinFonction extends JPanel {
 		creerAxes();
 		creerApproxCourbe();
 		creerGrille();
+		creerGraduations();
 		//Variables calculé à chaque repaint
 		largeurDuRectangle =  (maxX - minX) / (double) md.getNbRectangles();
 		double demiLongueur = getWidth()/2;
@@ -99,6 +101,10 @@ public class DessinFonction extends JPanel {
 			}
 		}
 	}
+	private void creerGraduations() {
+		
+	}
+
 	public void creerUnRectangle() {
 		//Dessiner les rectangles
 		yRectangle = this.evalFonction(xRectangle);
@@ -240,5 +246,4 @@ public class DessinFonction extends JPanel {
 		}
 		repaint();
 	}
-
 }
