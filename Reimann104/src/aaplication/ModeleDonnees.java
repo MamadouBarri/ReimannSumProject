@@ -102,8 +102,8 @@ public class ModeleDonnees {
 		return(this.nbLignesBrisees);
 	}
 	public double getAireAlg() {
-		double aireAlgebrique = (-this.parametreA * Math.cos(this.maxX) + this.parametreB * Math.sin(this.maxX) + this.parametreC * this.maxX) - (-this.parametreA * Math.cos(this.minX) 
-				+ this.parametreB * Math.sin(this.minX) + this.parametreC * this.minX);
+		double aireAlgebrique = (this.parametreA * Math.sin(this.maxX) - this.parametreB * Math.cos(this.maxX) + this.parametreC * this.maxX) - (this.parametreA * Math.sin(this.minX) 
+				- this.parametreB * Math.cos(this.minX) + this.parametreC * this.minX);
 		return(aireAlgebrique);
 	}
 	public double getAireGeo() {
