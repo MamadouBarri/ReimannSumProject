@@ -57,7 +57,7 @@ public class Application104 extends JFrame {
 	public Application104() {
 		setTitle("Somme de Reimann");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1000, 750);
+		setBounds(100, 100, 1181, 755);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -65,42 +65,34 @@ public class Application104 extends JFrame {
 		
 		JPanel pnFonction = new JPanel();
 		pnFonction.setBorder(new TitledBorder(null, "Fonction", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnFonction.setBounds(374, 0, 610, 355);
+		pnFonction.setBounds(374, 0, 781, 711);
 		contentPane.add(pnFonction);
 		pnFonction.setLayout(null);
 		
 		txtfdValeurX = new JTextField();
-		txtfdValeurX.setBounds(36, 310, 66, 30);
+		txtfdValeurX.setBounds(26, 658, 40, 30);
 		pnFonction.add(txtfdValeurX);
 		txtfdValeurX.setColumns(10);
 		
 		JLabel lblValeurX = new JLabel("X:");
 		lblValeurX.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblValeurX.setBounds(10, 310, 16, 25);
+		lblValeurX.setBounds(6, 658, 16, 25);
 		pnFonction.add(lblValeurX);
 		
 		JLabel lblValeurY = new JLabel("Y:");
 		lblValeurY.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblValeurY.setBounds(112, 310, 16, 25);
+		lblValeurY.setBounds(72, 658, 16, 25);
 		pnFonction.add(lblValeurY);
 		
 		txtfdValeurY = new JTextField();
 		txtfdValeurY.setColumns(10);
-		txtfdValeurY.setBounds(138, 310, 66, 30);
+		txtfdValeurY.setBounds(90, 658, 40, 30);
 		pnFonction.add(txtfdValeurY);
 		
 		DessinFonction dessinFonction = new DessinFonction();
-		dessinFonction.setBounds(58, 30, 474, 252);
+		dessinFonction.setModeleDonnees(md);
+		dessinFonction.setBounds(72, 11, 600, 600);
 		pnFonction.add(dessinFonction);
-		
-		JButton btnResetFonction = new JButton("R\u00E9initialiser la Fonction");
-		btnResetFonction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dessinFonction.resetTranslation();
-			}
-		});
-		btnResetFonction.setBounds(381, 310, 209, 34);
-		pnFonction.add(btnResetFonction);
 		
 		JButton btnDroite = new JButton("Droite");
 		btnDroite.addActionListener(new ActionListener() {
@@ -108,8 +100,17 @@ public class Application104 extends JFrame {
 				dessinFonction.translationEnX(1);
 			}
 		});
-		btnDroite.setBounds(460, 286, 89, 23);
+		btnDroite.setBounds(583, 622, 89, 23);
 		pnFonction.add(btnDroite);
+		
+		JButton btnResetFonction = new JButton("R\u00E9initialiser la Fonction");
+		btnResetFonction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dessinFonction.resetTranslation();
+			}
+		});
+		btnResetFonction.setBounds(562, 656, 209, 34);
+		pnFonction.add(btnResetFonction);
 		
 		JButton btnGauche = new JButton("Gauche");
 		btnGauche.addActionListener(new ActionListener() {
@@ -117,7 +118,7 @@ public class Application104 extends JFrame {
 				dessinFonction.translationEnX(-1);
 			}
 		});
-		btnGauche.setBounds(58, 286, 89, 23);
+		btnGauche.setBounds(68, 622, 89, 23);
 		pnFonction.add(btnGauche);
 		
 		JButton btnHaut = new JButton("Haut");
@@ -126,7 +127,7 @@ public class Application104 extends JFrame {
 				dessinFonction.translationEnY(1);
 			}
 		});
-		btnHaut.setBounds(532, 30, 68, 23);
+		btnHaut.setBounds(682, 11, 68, 23);
 		pnFonction.add(btnHaut);
 		
 		JButton btnBas = new JButton("Bas");
@@ -135,7 +136,7 @@ public class Application104 extends JFrame {
 				dessinFonction.translationEnY(-1);
 			}
 		});
-		btnBas.setBounds(532, 259, 68, 23);
+		btnBas.setBounds(682, 588, 68, 23);
 		pnFonction.add(btnBas);
 		
 		JButton btnZoonin = new JButton("+");
@@ -145,7 +146,7 @@ public class Application104 extends JFrame {
 			}
 		});
 		btnZoonin.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		btnZoonin.setBounds(0, 30, 60, 80);
+		btnZoonin.setBounds(6, 11, 60, 80);
 		pnFonction.add(btnZoonin);
 		
 		JButton btnZoomout = new JButton("-");
@@ -155,7 +156,7 @@ public class Application104 extends JFrame {
 			}
 		});
 		btnZoomout.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		btnZoomout.setBounds(0, 202, 60, 80);
+		btnZoomout.setBounds(10, 531, 60, 80);
 		pnFonction.add(btnZoomout);
 		
 		
@@ -215,7 +216,7 @@ public class Application104 extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "R\u00E9sultats", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(0, 352, 984, 359);
+		panel.setBounds(0, 352, 375, 359);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
