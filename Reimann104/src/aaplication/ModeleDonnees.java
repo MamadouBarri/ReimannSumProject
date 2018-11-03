@@ -14,10 +14,10 @@ public class ModeleDonnees {
 	private int nbLignesBrisees = 100;
 	private int centreX = 0;
 	private int centreY = 0;
-	private int minX = -5;
-	private int maxX = 5;
-	private int minY = -5;
-	private int maxY = 5;
+	private double minX = -5;
+	private double maxX = 5;
+	private double minY = -5;
+	private double maxY = 5;
 	
 	
 	//constantes 
@@ -60,16 +60,16 @@ public class ModeleDonnees {
 	public void setCentreY (int centreY) {
 		this.centreY = centreY;
 	}
-	public void setMinX (int minX) {
+	public void setMinX (double minX) {
 		this.minX = minX;
 	}
-	public void setMaxX (int maxX) {
+	public void setMaxX (double maxX) {
 		this.maxX = maxX;
 	}
-	public void setMinY (int minY) {
+	public void setMinY (double minY) {
 		this.minY = minY;
 	}
-	public void setMaxY (int maxY) {
+	public void setMaxY (double maxY) {
 		this.maxY = maxY;
 	}
 	public void setNbLignesBrisees(int nbLignesBrisees) {
@@ -101,16 +101,16 @@ public class ModeleDonnees {
 	public int getCentreY () {
 		return(this.centreY);
 	}
-	public int getMinX () {
+	public double getMinX () {
 		return(this.minX);
 	}
-	public int getMaxX () {
+	public double getMaxX () {
 		return(this.maxX);
 	}
-	public int getMinY () {
+	public double getMinY () {
 		return(this.minY);
 	}
-	public int getMaxY() {
+	public double getMaxY() {
 		return(this.maxY);
 	}
 	public int getNbLignesBrisees() {

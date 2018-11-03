@@ -24,6 +24,7 @@ import javax.swing.JSlider;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import fonction.DessinFonction;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * Classe de l'application qui affiche une fonction et calcule son aire sous la courbe avec la somme de Reimann
@@ -208,16 +209,19 @@ public class Application104 extends JFrame {
 		pnParametres.setLayout(null);
 		
 		JSpinner spnValeurA = new JSpinner();
+		spnValeurA.setModel(new SpinnerNumberModel(md.getParametreA(), null, null, new Integer(1)));
 		spnValeurA.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurA.setBounds(68, 38, 45, 46);
 		pnParametres.add(spnValeurA);
 		
 		JSpinner spnValeurB = new JSpinner();
+		spnValeurB.setModel(new SpinnerNumberModel(md.getParametreB(), null, null, new Integer(1)));
 		spnValeurB.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurB.setBounds(189, 38, 45, 46);
 		pnParametres.add(spnValeurB);
 		
 		JSpinner spnValeurC = new JSpinner();
+		spnValeurC.setModel(new SpinnerNumberModel(md.getParametreC(), null, null, new Integer(1)));
 		spnValeurC.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurC.setBounds(308, 38, 45, 46);
 		pnParametres.add(spnValeurC);
@@ -229,6 +233,16 @@ public class Application104 extends JFrame {
 		pnParametres.add(lblFonction);
 		
 		JCheckBox chckbxRectangle = new JCheckBox("Rectangles:");
+		chckbxRectangle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chckbxRectangle.isSelected()) {
+					//md.setAfficheRectangle(true);
+				}else {
+					//md.setAfficheRectangle(false);
+				}
+			}
+		});
+		chckbxRectangle.setSelected(true);
 		chckbxRectangle.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		chckbxRectangle.setBounds(6, 101, 135, 26);
 		pnParametres.add(chckbxRectangle);
@@ -261,20 +275,39 @@ public class Application104 extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblAireAlgbrique = new JLabel("Aire Alg\u00E9brique (u\u00B2) :");
-		lblAireAlgbrique.setBounds(10, 11, 305, 76);
+		lblAireAlgbrique.setBounds(10, 11, 121, 76);
 		panel.add(lblAireAlgbrique);
 		
 		JLabel lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique (u\u00B2) :");
-		lblAireGeometrique.setBounds(10, 87, 305, 76);
+		lblAireGeometrique.setBounds(10, 87, 121, 76);
 		panel.add(lblAireGeometrique);
 		
 		JLabel lblDifference = new JLabel("Diff\u00E9rence (u\u00B2) :");
-		lblDifference.setBounds(10, 174, 305, 76);
+		lblDifference.setBounds(10, 174, 121, 76);
 		panel.add(lblDifference);
 		
 		JLabel lblPourEcart = new JLabel("Pourcentage d'\u00E9cart (%) :");
-		lblPourEcart.setBounds(10, 261, 305, 76);
+		lblPourEcart.setBounds(10, 261, 136, 76);
 		panel.add(lblPourEcart);
+		
+		JLabel lblAireAlgNumerique = new JLabel("New label");
+		lblAireAlgNumerique.setBounds(141, 42, 46, 14);
+		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
+		panel.add(lblAireAlgNumerique);
+		
+		JLabel lblAireGeoNumerique = new JLabel("New label");
+		lblAireGeoNumerique.setBounds(141, 118, 46, 14);
+		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
+		panel.add(lblAireGeoNumerique);
+		
+		JLabel lblDifferenceNumerique = new JLabel("New label");
+		lblDifferenceNumerique.setBounds(128, 205, 46, 14);
+		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
+		panel.add(lblDifferenceNumerique);
+		
+		JLabel lblPourcentageNumerique = new JLabel("New label");
+		lblPourcentageNumerique.setBounds(175, 292, 46, 14);
+		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
+		panel.add(lblPourcentageNumerique);
 	}
-	//Methodes pour les autres ecouters en private
 }

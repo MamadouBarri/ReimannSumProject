@@ -31,8 +31,7 @@ public class DessinFonction extends JPanel {
 	private double largeurDuRectangle;
 	private double xRectangle;
 	private double yRectangle;
-	private double maxX = md.getMaxX(), minX = md.getMinY();
-	private double maxY = md.getMaxY(), minY = md.getMinY();
+	
 	private double valeurDeTranslationEnX;
 	private double valeurDeTranslationEnY;
 	private double valeurDuZoom;
@@ -41,6 +40,11 @@ public class DessinFonction extends JPanel {
 	private double pixelsParUniteX;
 	private double pixelsParUniteY;
 	private double posX;
+	private double minX;
+	private double maxX;
+	private double minY;
+	private double maxY;
+	
 	/**
 	 * Constructeur : crée la zone de dessin
 	 */
@@ -57,6 +61,10 @@ public class DessinFonction extends JPanel {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
+		this.maxX = md.getMaxX();
+		this.minX = md.getMinY();
+		this.maxY = md.getMaxY();
+		this.minY = md.getMinY();
 		//Appel des méthodes à chaque repaint
 		creerAxes();
 		creerApproxCourbe();
@@ -121,13 +129,14 @@ public class DessinFonction extends JPanel {
 	 */
 	//Mamadou
 	private void creerApproxCourbe() {
-		double x,y;
+		double x = md.getMinX();
+		maxX = md.getMaxX();
+		minX = md.getMinX();
+		double y;
 		double nbLignesBrisees = md.getNbLignesBrisees();
-		double minX = this.minX ;
-		double maxX = this.maxX ;
+
 		double posX = this.minX ;
 		ligneBrisee = new Path2D.Double();
-		x = minX;
 		posX = (minX-maxX)/2;
 		y = this.evalFonction(x);
 		//Tracer l'approximation
@@ -203,8 +212,8 @@ public class DessinFonction extends JPanel {
 	//Gayta
 	public void translationEnX(int x) {
 		//changement de la partie de la fonction dessinée
-		this.maxX += x;
-		this.minX += x;
+		md.setMaxX(maxX + x);
+		md.setMinX(minX + x);
 		//changement de la position de centre du dessin
 		this.valeurDeTranslationEnX += x;
 		repaint();
@@ -212,8 +221,8 @@ public class DessinFonction extends JPanel {
 	
 	public void translationEnY(int y) {
 		//changement de la partie de la fonction dessinée
-		this.maxY += y;
-		this.minY += y;
+		md.setMaxY(maxY + y);
+		md.setMinY(minY + y);
 		//changement de la position de centre du dessin
 		this.valeurDeTranslationEnY -= y;
 		repaint();
@@ -230,19 +239,11 @@ public class DessinFonction extends JPanel {
 	}
 	
 	public void zoom(double z) {
-		this.maxX += z;
-		this.minX -= z;
-		//Vu qu'on utilise cette équation comme un diviseur, ce "if" prévient une divison par zéro
-		if(maxX-minX == 0) {
-			this.maxX -= z;
-			this.minX += z;
-		}
-		this.maxY += z;
-		this.minY -= z;
-		//Vu qu'on utilise cette équation comme un diviseur, ce "if" prévient une divison par zéro
-		if(maxY-minY == 0) {
-			this.maxY -= z;
-			this.minY += z;
+		if((md.getMaxX() - md.getMinX() + z*2) != 0) {
+			md.setMaxX(md.getMaxX() + z);
+			md.setMinX(md.getMinX() - z);
+			md.setMaxY(md.getMaxY() + z);
+			md.setMinY(md.getMinY() - z);
 		}
 		repaint();
 	}
