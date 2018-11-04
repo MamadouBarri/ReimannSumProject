@@ -2,6 +2,7 @@ package fonction;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -173,6 +174,15 @@ public class DessinFonction extends JPanel {
 	 */
 	
 	private void creerGraduations(Graphics2D g) {
+		//changement de la taille des String selon le zoom appliqué
+		Font currentFont = g.getFont();
+		if(currentFont.getSize() - (float)valeurDeZoom>0) {
+			Font newFont = currentFont.deriveFont(currentFont.getSize() - (float)valeurDeZoom);
+			g.setFont(newFont);
+		} else {
+			Font newFont = currentFont.deriveFont((float)0.09);
+			g.setFont(newFont);
+		}
 		//création des graduation en X
 		float posX = 0;
 		int valeurX = (int)md.getMinX();
