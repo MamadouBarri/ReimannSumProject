@@ -149,6 +149,8 @@ public class Application104 extends JFrame {
 
 		//Objet du dessin de la fonction
 		DessinFonction dessinFonction = new DessinFonction();
+		//Set le modèle de donnée pour le dessin de la fonction
+	    dessinFonction.setModeleDonnees(md);
 		dessinFonction.addKeyListener(new KeyAdapter() {
 			@Override
 			//Évenement du clavier
@@ -170,8 +172,6 @@ public class Application104 extends JFrame {
 				dessinFonction.repaint();
 			}
 		});
-		//Set le modèle de donnée pour le dessin de la fonction
-		dessinFonction.setModeleDonnees(md);
 		dessinFonction.setBounds(72, 11, 600, 600);
 		pnFonction.add(dessinFonction);
 		
@@ -196,6 +196,7 @@ public class Application104 extends JFrame {
 		btnResetFonction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.resetTranslation();
+				miseAJour();
 			}
 		});
 		btnResetFonction.setBounds(562, 666, 209, 34);
@@ -376,7 +377,7 @@ public class Application104 extends JFrame {
 		chckbxRectangle.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		chckbxRectangle.setBounds(6, 101, 135, 26);
 		pnParametres.add(chckbxRectangle);
-		lblNbRectangles = new JLabel("10");
+		lblNbRectangles = new JLabel(md.getNbRectangles()+"");
 		lblNbRectangles.setFont(new Font("Snap ITC", Font.PLAIN, 16));
 		lblNbRectangles.setBackground(Color.WHITE);
 		lblNbRectangles.setBounds(172, 93, 74, 46);
@@ -390,7 +391,7 @@ public class Application104 extends JFrame {
 				if(chckbxRectangle.isSelected()) {
 					md.setNbRectangles((int)sldNbRectangles.getValue());
 					lblNbRectangles.setText(md.getNbRectangles() + "");
-					dessinFonction.repaint();
+					dessinFonction.setModeleDonnees(md);
 					miseAJour();
 				} else {
 					sldNbRectangles.setValue((int)nbRectanglesCourant);
@@ -413,8 +414,6 @@ public class Application104 extends JFrame {
 				md.setParametreC(md.getParametreCInitial());
 				md.setNbRectangles(md.getNbRectanglesInitial());
 				sldNbRectangles.setValue(md.getNbRectangles());
-				dessinFonction.setModeleDonnees(md);
-				miseAJour();
 				if(chckbxRectangle.isSelected()==false) {
 					nbRectanglesCourant = md.getNbRectanglesInitial();
 					sldNbRectangles.setValue(md.getNbRectangles());
@@ -422,9 +421,12 @@ public class Application104 extends JFrame {
 					lblDifference.setText("Diff\u00E9rence : ");
 					lblPourEcart.setText("Pourcentage d'\u00E9cart : ");
 				}
+				dessinFonction.setModeleDonnees(md);
+				miseAJour();
 			}
 		});
 		btnResetParametres.setBounds(6, 281, 364, 38);
 		pnParametres.add(btnResetParametres);
+		miseAJour();
 	}
 }

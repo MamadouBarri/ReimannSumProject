@@ -406,6 +406,7 @@ public class ModeleDonnees {
 	 * @return la differnce  entre l'aire alg. et geo. en unites
 	 */
 	public double getDifferenceUnites() {
+		this.setDifferenceUnites(this.getAireAlg()-this.getAireTotaleGeometrique());
 		return(this.differenceUnites);
 	}
 	/**
@@ -434,8 +435,7 @@ public class ModeleDonnees {
 	 * @return la largeur des rectangles
 	 */
 	public double getLargeurDesRectangles() {
-		double largeurDesRectangles = (this.maxX - this.minX)/this.nbRectangles;
-		this.setLargeurDesRectangles(largeurDesRectangles);
+		this.setLargeurDesRectangles((this.maxX - this.minX)/this.nbRectangles);
 		return(this.largeurDesRectangles);
 	}
 	
@@ -455,6 +455,6 @@ public class ModeleDonnees {
 	 */
 	//Mamadou
 	public void ajouterAireRect() {
-		this.setAireTotaleGeometrique(this.getAireTotaleGeometrique() + this.getYRect() * this.getLargeurDesRectangles());
+		this.setAireTotaleGeometrique(this.getAireTotaleGeometrique() + this.yRect * this.getLargeurDesRectangles());
 	}
 }

@@ -64,7 +64,6 @@ public class DessinFonction extends JPanel {
 		this.minY = md.getMinY();
 		//Appel des méthodes à chaque repaint
 		//On crée ici les axes, la grille, la fonction et remet à zero l'aire géometrique
-		md.setAireTotaleGeometrique(0);
 		creerAxes();
 		creerApproxCourbe();
 		creerGrille();
@@ -111,6 +110,7 @@ public class DessinFonction extends JPanel {
 	public void dessinerTousLesRectangles(Graphics2D g2d, AffineTransform atr) {
 		Random rand = new Random();
 		Color couleurAleatoire;
+		md.setAireTotaleGeometrique(0);
 		if(md.getAffficheRectangles()) {
 			for(int k =0;k<md.getNbRectangles();k++) {
 				//La touche secrete
