@@ -219,7 +219,47 @@ public class Application104 extends JFrame {
 		btnZoomOut.setFont(new Font("Tahoma", Font.PLAIN, 35));
 		btnZoomOut.setBounds(24, 551, 40, 40);
 		pnFonction.add(btnZoomOut);
+		panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "R\u00E9sultats", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(0, 352, 375, 359);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
+		lblAireAlgbrique = new JLabel("Aire Alg\u00E9brique (u\u00B2) :");
+		lblAireAlgbrique.setBounds(10, 11, 121, 76);
+		panel.add(lblAireAlgbrique);
+		
+		JLabel lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique (u\u00B2) :");
+		lblAireGeometrique.setBounds(10, 87, 121, 76);
+		panel.add(lblAireGeometrique);
+		
+		JLabel lblDifference = new JLabel("Diff\u00E9rence (u\u00B2) :");
+		lblDifference.setBounds(10, 174, 121, 76);
+		panel.add(lblDifference);
+		
+		JLabel lblPourEcart = new JLabel("Pourcentage d'\u00E9cart (%) :");
+		lblPourEcart.setBounds(10, 261, 136, 76);
+		panel.add(lblPourEcart);
+		
+		lblAireAlgNumerique = new JLabel("New label");
+		lblAireAlgNumerique.setBounds(141, 42, 46, 14);
+		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
+		panel.add(lblAireAlgNumerique);
+		
+		lblAireGeoNumerique = new JLabel("New label");
+		lblAireGeoNumerique.setBounds(141, 118, 46, 14);
+		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
+		panel.add(lblAireGeoNumerique);
+		
+		lblDifferenceNumerique = new JLabel("New label");
+		lblDifferenceNumerique.setBounds(128, 205, 46, 14);
+		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
+		panel.add(lblDifferenceNumerique);
+		
+		lblPourcentageNumerique = new JLabel("New label");
+		lblPourcentageNumerique.setBounds(175, 292, 46, 14);
+		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
+		panel.add(lblPourcentageNumerique);
 		
 		
 		JPanel pnParametres = new JPanel();
@@ -297,9 +337,9 @@ public class Application104 extends JFrame {
 		sldNbRectangles = new JSlider();
 		sldNbRectangles.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				md.setNbRectangles((int)sldNbRectangles.getValue());
+					md.setNbRectangles((int)sldNbRectangles.getValue());
 					lblNbRectangles.setText(md.getNbRectangles() + "");
-					//miseAJour();
+					miseAJour();
 					dessinFonction.repaint();
 			}
 		});
@@ -319,47 +359,7 @@ public class Application104 extends JFrame {
 		btnResetParametres.setBounds(6, 281, 364, 38);
 		pnParametres.add(btnResetParametres);
 		
-		panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "R\u00E9sultats", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(0, 352, 375, 359);
-		contentPane.add(panel);
-		panel.setLayout(null);
 		
-		lblAireAlgbrique = new JLabel("Aire Alg\u00E9brique (u\u00B2) :");
-		lblAireAlgbrique.setBounds(10, 11, 121, 76);
-		panel.add(lblAireAlgbrique);
-		
-		JLabel lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique (u\u00B2) :");
-		lblAireGeometrique.setBounds(10, 87, 121, 76);
-		panel.add(lblAireGeometrique);
-		
-		JLabel lblDifference = new JLabel("Diff\u00E9rence (u\u00B2) :");
-		lblDifference.setBounds(10, 174, 121, 76);
-		panel.add(lblDifference);
-		
-		JLabel lblPourEcart = new JLabel("Pourcentage d'\u00E9cart (%) :");
-		lblPourEcart.setBounds(10, 261, 136, 76);
-		panel.add(lblPourEcart);
-		
-		lblAireAlgNumerique = new JLabel("New label");
-		lblAireAlgNumerique.setBounds(141, 42, 46, 14);
-		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
-		panel.add(lblAireAlgNumerique);
-		
-		lblAireGeoNumerique = new JLabel("New label");
-		lblAireGeoNumerique.setBounds(141, 118, 46, 14);
-		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
-		panel.add(lblAireGeoNumerique);
-		
-		lblDifferenceNumerique = new JLabel("New label");
-		lblDifferenceNumerique.setBounds(128, 205, 46, 14);
-		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
-		panel.add(lblDifferenceNumerique);
-		
-		lblPourcentageNumerique = new JLabel("New label");
-		lblPourcentageNumerique.setBounds(175, 292, 46, 14);
-		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
-		panel.add(lblPourcentageNumerique);
 	}
 	/**
 	 * Methode qui met a jour toutes les informations dans l'application

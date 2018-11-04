@@ -18,6 +18,8 @@ public class ModeleDonnees {
 	private double maxX = 5;
 	private double minY = -5;
 	private double maxY = 5;
+	private double differencePourcentage;
+	private double differenceUnites;
 	
 	
 	//constantes 
@@ -105,6 +107,12 @@ public class ModeleDonnees {
 	public void setMINY(double Y) {
 		this.MIN_Y = Y;
 	}
+	public void setDifferencePourecentage(double differencePourecentage) {
+		this.differencePourcentage = differencePourcentage;
+	}
+	public void setDifferenceUnites(double differenceUnites) {
+		this.differenceUnites = differenceUnites;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -180,6 +188,12 @@ public class ModeleDonnees {
 			x+=largeurRect;
 		}
 		return(aireTotale);
+	}
+	public double getDifferencePourcentage() {
+		return((this.aireAlg - this.aireGeo)/this.aireAlg * 100.0);
+	}
+	public double getDifferneceUnites() {
+		return(this.aireAlg - this.aireGeo);
 	}
 	//Recalculer les données 
 	// nbRecet --> recalculer longueur rect, recalculer laire etc..
