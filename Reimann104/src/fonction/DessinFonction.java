@@ -10,6 +10,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -63,6 +64,9 @@ public class DessinFonction extends JPanel {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
+		//variables pour la touche secrete
+		Random rand = new Random();
+		Color couleurAleatoire;
 		this.maxX = md.getMaxX();
 		this.minX = md.getMinY();
 		this.maxY = md.getMaxY();
@@ -101,6 +105,13 @@ public class DessinFonction extends JPanel {
 		g2d.setColor(new Color(1f,0.7f,0.75f,0.5f));
 		if(md.getAffficheRectangles()) {
 			for(int k =0;k<md.getNbRectangles();k++) {
+				if(md.getSecret()) {
+					float a = rand.nextFloat();
+					float b = rand.nextFloat();
+					float c = rand.nextFloat();
+					couleurAleatoire = new Color(a,b,c);
+					g2d.setColor(couleurAleatoire);
+				}
 				creerUnRectangle();
 				if(yRectangle <0) {
 					g2d.scale(1, -1);
@@ -247,7 +258,7 @@ public class DessinFonction extends JPanel {
 	 */
 	//Mamadou
 	private double evalFonction(double x) {
-		return(md.getParametreA() * Math.cos(x) + md.getParametreB() * Math.sin(x) + md.getParametreC());
+			return(md.getParametreA() * Math.cos(x) + md.getParametreB() * Math.sin(x) + md.getParametreC());
 	}
 	
 	/**

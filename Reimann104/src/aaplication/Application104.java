@@ -28,6 +28,8 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * Classe de l'application qui affiche une fonction et calcule son aire sous la courbe avec la somme de Reimann
@@ -102,9 +104,25 @@ public class Application104 extends JFrame {
 		pnFonction.setLayout(null);
 		
 		DessinFonction dessinFonction = new DessinFonction();
+		dessinFonction.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(md.getCurseurDansComposant() && e.getKeyChar() == 's') {
+					//La methode secrete
+					md.setSecret(true);
+					repaint();
+				}
+			}
+		});
 		dessinFonction.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
+				md.setCurseurDansComposant(true);
+				dessinFonction.requestFocus();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				md.setCurseurDansComposant(false);
 			}
 		});
 		dessinFonction.setModeleDonnees(md);

@@ -22,6 +22,7 @@ public class ModeleDonnees {
 	private double differenceUnites;
 	private boolean afficheRectangles = true;
 	private boolean curseurDansDessin;
+	private boolean secret;
 	
 	
 	//constantes 
@@ -121,6 +122,9 @@ public class ModeleDonnees {
 	public void setCurseurDansComposant(boolean curseurDansComposant) {
 		this.curseurDansDessin = curseurDansComposant;
 	}
+	public void setSecret(boolean secret) {
+		this.secret = secret;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -210,6 +214,9 @@ public class ModeleDonnees {
 	}
 	public boolean getCurseurDansComposant() {
 		return(this.curseurDansDessin);
+	}
+	public boolean getSecret() {
+		return(this.secret);
 	}
 	//Recalculer les données 
 	// nbRecet --> recalculer longueur rect, recalculer laire etc..
