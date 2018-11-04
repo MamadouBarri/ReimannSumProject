@@ -21,14 +21,14 @@ public class ModeleDonnees {
 	
 	
 	//constantes 
-	final double PARAMETRE_A = 2.4;
-	final double PARAMETRE_B = 1.1;
-	final double PARAMETRE_C = 0.8;
-	final double NB_RECTANGLES = 10;
-	final double MIN_X = -5;
-	final double MAX_X = 5;
-	final double MIN_Y = -5;
-	final double MAX_Y = 5;
+	public double PARAMETRE_A = 2.4;
+	public double PARAMETRE_B = 1.1;
+	public double PARAMETRE_C = 0.8;
+	public double NB_RECTANGLES = 10;
+	private double MIN_X = -5;
+	private double MAX_X = 5;
+	private double MIN_Y = -5;
+	private double MAX_Y = 5;
 	
 	
 	
@@ -81,6 +81,30 @@ public class ModeleDonnees {
 	public void setAireGeo(double aireGeo) {
 		this.aireGeo = aireGeo;
 	}
+	public void setPARAMETREA(double PARAM_A) {
+		this.PARAMETRE_A = PARAM_A;
+	}
+	public void setPARAMETREB(double PARAM_B) {
+		this.PARAMETRE_B = PARAM_B;
+	}
+	public void setPARAMETREC(double PARAM_C) {
+		this.PARAMETRE_C = PARAM_C;
+	}
+	public void setNBRECTANGLES(double NB_RECT) {
+		this.NB_RECTANGLES = NB_RECT;
+	}
+	public void setMAXX(double X) {
+		this.MAX_X = X;
+	}
+	public void setMINX(double X) {
+		this.MIN_X = X;
+	}
+	public void setMAXY(double Y) {
+		this.MAX_Y = Y;
+	}
+	public void setMINY(double Y) {
+		this.MIN_Y = Y;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -115,6 +139,30 @@ public class ModeleDonnees {
 	}
 	public int getNbLignesBrisees() {
 		return(this.nbLignesBrisees);
+	}
+	public double getPARAMETREA() {
+		return this.PARAMETRE_A;
+	}
+	public double getPARAMETREB() {
+		return this.PARAMETRE_B;
+	}
+	public double getPARAMETREC() {
+		return this.PARAMETRE_C;
+	}
+	public double getNBRECTANGLES() {
+		return this.NB_RECTANGLES;
+	}
+	public double getMAXX() {
+		return this.MAX_X;
+	}
+	public double getMINX() {
+		return this.MIN_X;
+	}
+	public double getMAXY() {
+		return this.MAX_Y;
+	}
+	public double getMINY() {
+		return this.MIN_Y;
 	}
 	public double getAireAlg() {
 		double aireAlgebrique = (this.parametreA * Math.sin(this.maxX) - this.parametreB * Math.cos(this.maxX) + this.parametreC * this.maxX) - (this.parametreA * Math.sin(this.minX) 

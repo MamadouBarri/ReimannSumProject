@@ -92,8 +92,6 @@ public class DessinFonction extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON  );   //Adoucissement des contours
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.draw(atr.createTransformedShape(grille));
-		g2d.setColor(Color.BLUE);
-		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setColor(Color.red);
 		g2d.draw(atr.createTransformedShape(ligneBrisee));
 		//Dessiner rectangles
@@ -108,7 +106,10 @@ public class DessinFonction extends JPanel {
 				g2d.fill(atr.createTransformedShape(rect));
 			}
 		}
+		g2d.setColor(Color.BLUE);
+		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setTransform(atr2);
+		atr2.scale(pixelsParUniteX, pixelsParUniteY);
 		g2d.setColor(Color.BLACK);
 		creerGraduations(g2d);
 	}
@@ -155,7 +156,7 @@ public class DessinFonction extends JPanel {
 	//Mamadou
 	private void creerAxes() {
 		//Variables
-		double posX = (minX-maxX)/2;
+		double posX = (md.getMinX()-md.getMaxX())/2;
 		double posY = (minY-maxY)/2;
 		//Axes
 		axes = new Path2D.Double();
@@ -172,15 +173,30 @@ public class DessinFonction extends JPanel {
 	 */
 	
 	private void creerGraduations(Graphics g) {
+		//création des graduation en X
 		int posX = 0;
 		int valeurX = (int)md.getMinX();
 		for(int k=0; k<md.getMaxX()-md.getMinX();k++) {
-			g.drawString(valeurX+"", posX, getHeight()/2+10);
+			g.drawString(valeurX+"", posX, getHeight()/2+10-(int)(valeurDeTranslationEnY*pixelsParUniteY));
 			valeurX++;
 			posX+=pixelsParUniteX;
 		}
-		g.drawString(valeurX+"", posX-14, getHeight()/2+10);
-		
+		//dessine la dernière graduation en X
+		g.drawString(valeurX+"", posX-19, getHeight()/2+10-(int)(valeurDeTranslationEnY*pixelsParUniteY));
+		//création des graduations en Y
+		int posY = 0;
+		int valeurY = (int)md.getMaxY();
+		//dessine la dernière graduation en Y
+		if(md.getMaxY()!=0) {
+			g.drawString(valeurY+"", getWidth()/2-(int)(valeurDeTranslationEnX*pixelsParUniteX)+5, 12);
+		}
+		for(int i=0; i<=md.getMaxY()-md.getMinY();i++) {
+			if(valeurY!=0||md.getMinY()==0) {
+				g.drawString(valeurY+"", getWidth()/2-(int)(valeurDeTranslationEnX*pixelsParUniteX)+5, posY);
+			}
+			valeurY--;
+			posY+=pixelsParUniteY;
+		}
 		
 	}
 	
@@ -243,7 +259,10 @@ public class DessinFonction extends JPanel {
 	}
 	
 	public void resetTranslation() {
-		
+		md.setMaxX(md.getMAXX());
+		md.setMinX(md.getMINX());
+		md.setMaxY(md.getMAXY());
+		md.setMinY(md.getMINY());
 		valeurDeTranslationEnX = 0;
 		valeurDeTranslationEnY = 0;
 		repaint();
