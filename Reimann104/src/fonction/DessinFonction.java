@@ -99,14 +99,17 @@ public class DessinFonction extends JPanel {
 		g2d.draw(atr.createTransformedShape(ligneBrisee));
 		//Dessiner rectangles
 		g2d.setColor(new Color(1f,0.7f,0.75f,0.5f));
-		for(int k =0;k<md.getNbRectangles();k++) {
-			creerUnRectangle();
-			if(yRectangle <0) {
-				g2d.scale(1, -1);
-				g2d.fill(atr.createTransformedShape(rect));
-				g2d.scale(1, -1);
-			}else {
-				g2d.fill(atr.createTransformedShape(rect));
+		if(md.getAffficheRectangles()) {
+			g2d.setColor(Color.PINK);
+			for(int k =0;k<md.getNbRectangles();k++) {
+				creerUnRectangle();
+				if(yRectangle <0) {
+					g2d.scale(1, -1);
+					g2d.fill(atr.createTransformedShape(rect));
+					g2d.scale(1, -1);
+				}else {
+					g2d.fill(atr.createTransformedShape(rect));
+				}
 			}
 		}
 		g2d.setColor(Color.BLUE);

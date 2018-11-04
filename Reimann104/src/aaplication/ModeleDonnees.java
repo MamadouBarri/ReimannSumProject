@@ -20,6 +20,7 @@ public class ModeleDonnees {
 	private double maxY = 5;
 	private double differencePourcentage;
 	private double differenceUnites;
+	private boolean afficheRectangles = true;
 	
 	
 	//constantes 
@@ -113,6 +114,9 @@ public class ModeleDonnees {
 	public void setDifferenceUnites(double differenceUnites) {
 		this.differenceUnites = differenceUnites;
 	}
+	public void setAfficheRectangles(boolean afficheRectangles) {
+		this.afficheRectangles = afficheRectangles;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -196,6 +200,9 @@ public class ModeleDonnees {
 	}
 	public double getDifferneceUnites() {
 		return(this.aireAlg - this.aireGeo);
+	}
+	public boolean getAffficheRectangles() {
+		return(this.afficheRectangles);
 	}
 	//Recalculer les données 
 	// nbRecet --> recalculer longueur rect, recalculer laire etc..
