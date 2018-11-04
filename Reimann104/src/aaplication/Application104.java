@@ -35,8 +35,6 @@ import java.awt.Color;
 public class Application104 extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtfdValeurX;
-	private JTextField txtfdValeurY;
 	private java.net.URL  urlHaut = getClass().getClassLoader().getResource("a_haut.png");
 	private java.net.URL  urlBas = getClass().getClassLoader().getResource("a_bas.png");
 	private java.net.URL  urlGauche = getClass().getClassLoader().getResource("a_gauche.png");
@@ -96,26 +94,6 @@ public class Application104 extends JFrame {
 		pnFonction.setBounds(374, 0, 781, 711);
 		contentPane.add(pnFonction);
 		pnFonction.setLayout(null);
-		
-		txtfdValeurX = new JTextField();
-		txtfdValeurX.setBounds(24, 673, 40, 30);
-		pnFonction.add(txtfdValeurX);
-		txtfdValeurX.setColumns(10);
-		
-		JLabel lblValeurX = new JLabel("X:");
-		lblValeurX.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblValeurX.setBounds(6, 673, 16, 25);
-		pnFonction.add(lblValeurX);
-		
-		JLabel lblValeurY = new JLabel("Y:");
-		lblValeurY.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblValeurY.setBounds(74, 673, 16, 25);
-		pnFonction.add(lblValeurY);
-		
-		txtfdValeurY = new JTextField();
-		txtfdValeurY.setColumns(10);
-		txtfdValeurY.setBounds(91, 673, 40, 30);
-		pnFonction.add(txtfdValeurY);
 		
 		DessinFonction dessinFonction = new DessinFonction();
 		dessinFonction.setModeleDonnees(md);
@@ -299,10 +277,11 @@ public class Application104 extends JFrame {
 		chckbxRectangle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxRectangle.isSelected()) {
-					//md.setAfficheRectangle(true);
+					md.setAfficheRectangles(true);
 				}else {
-					//md.setAfficheRectangle(false);
+					md.setAfficheRectangles(false);
 				}
+				dessinFonction.repaint();
 			}
 		});
 		chckbxRectangle.setSelected(true);

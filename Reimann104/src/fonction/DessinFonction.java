@@ -100,15 +100,17 @@ public class DessinFonction extends JPanel {
 		//Dessiner rectangles
 		AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
 		g2d.setComposite(alcom);
-		g2d.setColor(Color.PINK);
-		for(int k =0;k<md.getNbRectangles();k++) {
-			creerUnRectangle();
-			if(yRectangle <0) {
-				g2d.scale(1, -1);
-				g2d.fill(atr.createTransformedShape(rect));
-				g2d.scale(1, -1);
-			}else {
-				g2d.fill(atr.createTransformedShape(rect));
+		if(md.getAffficheRectangles()) {
+			g2d.setColor(Color.PINK);
+			for(int k =0;k<md.getNbRectangles();k++) {
+				creerUnRectangle();
+				if(yRectangle <0) {
+					g2d.scale(1, -1);
+					g2d.fill(atr.createTransformedShape(rect));
+					g2d.scale(1, -1);
+				}else {
+					g2d.fill(atr.createTransformedShape(rect));
+				}
 			}
 		}
 		g2d.setColor(Color.BLUE);
