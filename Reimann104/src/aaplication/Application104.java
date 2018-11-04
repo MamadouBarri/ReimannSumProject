@@ -278,8 +278,10 @@ public class Application104 extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxRectangle.isSelected()) {
 					md.setAfficheRectangles(true);
+					remettreComposantesRectangles();
 				}else {
 					md.setAfficheRectangles(false);
+					enleverComposantesRectangles();
 				}
 				dessinFonction.repaint();
 			}
@@ -343,4 +345,26 @@ public class Application104 extends JFrame {
 		spnValeurB.setValue(md.getParametreB());
 		spnValeurC.setValue(md.getParametreC());
 	}
+	/**
+	 * Methode qui enleve toutes les composantes graphiques visibles se rapportant aux rectangles
+	 */
+	//Mamadou
+	public void enleverComposantesRectangles() {
+		lblNbRectangles.setVisible(false);
+		sldNbRectangles.setVisible(false);
+		lblAireGeometrique.setVisible(false);
+		lblDifference.setVisible(false);
+		lblPourEcart.setVisible(false);
+	}
+	/**
+	 * Methode qui remet toutes les composantes graphiques visibles se rapportant aux rectangles
+	 */
+	public void remettreComposantesRectangles() {
+		lblNbRectangles.setVisible(true);
+		sldNbRectangles.setVisible(true);
+		lblAireGeometrique.setVisible(true);
+		lblDifference.setVisible(true);
+		lblPourEcart.setVisible(true);
+	}
+
 }
