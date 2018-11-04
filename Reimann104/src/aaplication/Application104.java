@@ -354,9 +354,9 @@ public class Application104 extends JFrame {
 	 */
 	//Mamadou
 	public void miseAJour() {
-		lblAireAlgebrique.setText("Aire Alg\u00E9brique : " + String.format("%.3f", md.getAireAlg())+"u\\u00B2");
+		lblAireAlgebrique.setText("Aire Alg\u00E9brique : " + String.format("%.3f", md.getAireAlg())+"u\u00B2");
 	    lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireGeo()) + "u\u00B2");
-		lblDifference.setText("Diff\u00E9rence : "+String.format("%.3f", md.getDifferneceUnites()) +"u\\u00B2");
+		lblDifference.setText("Diff\u00E9rence : "+String.format("%.3f", md.getDifferneceUnites()) +"u\u00B2");
 		lblPourEcart.setText("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
 		lblNbRectangles.setText(md.getNbRectangles()+"");
 		spnValeurA.setValue(md.getParametreA());
