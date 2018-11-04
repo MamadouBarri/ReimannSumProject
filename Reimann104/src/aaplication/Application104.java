@@ -339,6 +339,13 @@ public class Application104 extends JFrame {
 				sldNbRectangles.setValue(md.getNbRectangles());
 				dessinFonction.setModeleDonnees(md);
 				miseAJour();
+				if(chckbxRectangle.isSelected()==false) {
+					nbRectanglesCourant = md.getNbRectanglesInitiales();
+					sldNbRectangles.setValue(md.getNbRectangles());
+					lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : ");
+					lblDifference.setText("Diff\u00E9rence : ");
+					lblPourEcart.setText("Pourcentage d'\u00E9cart : ");
+				}
 			}
 		});
 		btnResetParametres.setBounds(6, 281, 364, 38);
