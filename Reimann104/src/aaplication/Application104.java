@@ -60,6 +60,10 @@ public class Application104 extends JFrame {
 	private JSpinner spnValeurB;
 	private JSpinner spnValeurC;
 	private JLabel lblFonction;
+	
+	//variables
+	
+	private double nbRectanglesCourant;
 	/**
 	 * Demarrage de l'application
 	 */
@@ -277,9 +281,18 @@ public class Application104 extends JFrame {
 		chckbxRectangle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxRectangle.isSelected()) {
+					md.setNbRectangles((int)nbRectanglesCourant);
+					sldNbRectangles.setForeground(Color.BLACK);
 					md.setAfficheRectangles(true);
+					miseAJour();
 				}else {
+					nbRectanglesCourant = md.getNbRectangles();
+					md.setNbRectangles(0);
+					sldNbRectangles.setForeground(Color.LIGHT_GRAY);
 					md.setAfficheRectangles(false);
+					lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : ");
+					lblDifference.setText("Diff\u00E9rence : ");
+					lblPourEcart.setText("Pourcentage d'\u00E9cart : ");
 				}
 				dessinFonction.repaint();
 			}
@@ -298,10 +311,14 @@ public class Application104 extends JFrame {
 		sldNbRectangles = new JSlider();
 		sldNbRectangles.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				if(chckbxRectangle.isSelected()) {
 					md.setNbRectangles((int)sldNbRectangles.getValue());
 					lblNbRectangles.setText(md.getNbRectangles() + "");
 					miseAJour();
 					dessinFonction.repaint();
+				} else {
+					sldNbRectangles.setValue((int)nbRectanglesCourant);
+				}
 			}
 		});
 		sldNbRectangles.setValue(10);
