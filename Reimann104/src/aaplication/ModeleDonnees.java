@@ -21,6 +21,7 @@ public class ModeleDonnees {
 	private double differencePourcentage;
 	private double differenceUnites;
 	private boolean afficheRectangles = true;
+	private boolean curseurDansDessin;
 	
 	
 	//constantes 
@@ -117,6 +118,9 @@ public class ModeleDonnees {
 	public void setAfficheRectangles(boolean afficheRectangles) {
 		this.afficheRectangles = afficheRectangles;
 	}
+	public void setCurseurDansComposant(boolean curseurDansComposant) {
+		this.curseurDansDessin = curseurDansComposant;
+	}
 	
 	//Getters
 	public double getParametreA () {
@@ -203,6 +207,9 @@ public class ModeleDonnees {
 	}
 	public boolean getAffficheRectangles() {
 		return(this.afficheRectangles);
+	}
+	public boolean getCurseurDansComposant() {
+		return(this.curseurDansDessin);
 	}
 	//Recalculer les données 
 	// nbRecet --> recalculer longueur rect, recalculer laire etc..
