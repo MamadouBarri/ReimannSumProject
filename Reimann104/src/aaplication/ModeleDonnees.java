@@ -456,5 +456,6 @@ public class ModeleDonnees {
 	//Mamadou
 	public void ajouterAireRect() {
 		this.setAireTotaleGeometrique(this.getAireTotaleGeometrique() + this.yRect * this.getLargeurDesRectangles());
+		System.out.println(this.aireTotaleGeometrique);
 	}
 }

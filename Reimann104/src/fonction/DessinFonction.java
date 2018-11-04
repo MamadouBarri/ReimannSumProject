@@ -29,7 +29,6 @@ public class DessinFonction extends JPanel {
 	//Variables locales pour le dessin dans lesquels on assigne les valeurs du modèle de données
 	private Path2D.Double axes, ligneBrisee,grille;
 	private Rectangle2D.Double rect;
-	private double largeurDuRectangle;
 	private double valeurDeTranslationEnX;
 	private double valeurDeTranslationEnY;
 	private double pixelsParUniteX;
@@ -55,9 +54,6 @@ public class DessinFonction extends JPanel {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		//variables pour la touche secrete
-		Random rand = new Random();
-		Color couleurAleatoire;
 		this.maxX = md.getMaxX();
 		this.minX = md.getMinY();
 		this.maxY = md.getMaxY();

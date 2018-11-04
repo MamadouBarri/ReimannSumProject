@@ -82,51 +82,7 @@ public class Application104 extends JFrame {
 			}
 		});
 	}
-	/**
-	 * Methode qui met a jour toutes les informations dans l'application 
-	 * Cette méthode sera utilisé dans tous les écouteurs pour faciliter le code
-	 */
-	//Mamadou
-	private void miseAJour() {
-		lblAireAlgebrique.setText("Aire Alg\u00E9brique : " + String.format("%.3f", md.getAireAlg())+"u\u00B2");
-	    lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireTotaleGeometrique()) + "u\u00B2");
-		lblDifference.setText("Diff\u00E9rence : "+String.format("%.3f", md.getDifferenceUnites()) +"u\u00B2");
-		lblPourEcart.setText("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
-		lblNbRectangles.setText(md.getNbRectangles()+"");
-		spnValeurA.setValue(md.getParametreA());
-		spnValeurB.setValue(md.getParametreB());
-		spnValeurC.setValue(md.getParametreC());
-	}
-	/**
-	 * Methode qui verifie si on a bien appuye sur la touche s et que le curseur est bien dans le composant
-	 * @param e l'évenement du clavier
-	 */
-	//Mamadou
-	private void tocheSecrete(KeyEvent e) {
-		if(md.getCurseurDansComposant() && e.getKeyChar() == 's') {
-			//La methode secrete
-			if(premiereFois) {
-				JOptionPane.showMessageDialog(null, "Bonjour,vous avez découvert la touche secrète!" + "\nPour un effet spécial veuillez garder votre curseur dans la fonction et appyuez sur la touche s.\n"
-						+ "Pour arrêter l'effet veuillez simplement sortir votre curseur de la zone de la fonction!" );
-				premiereFois = false;
-			}
-			md.setSecret(true);
-			repaint();
-		}
-	}
-	/**
-	 * Remet les valeurs de md lorsque le curseur rentre dans le dessin
-	 */
-	private void curseurRentre() {
-		md.setCurseurDansComposant(true);
-	}
-	/**
-	 * Remet les valeurs de md lorsque le curseur sort du le dessin
-	 */
-	private void curseurSort() {
-		md.setCurseurDansComposant(false);
-		md.setSecret(false);
-	}
+	
 	/**
 	 * Constructeur qui génère l'inferface de l'applicaiton
 	 */
@@ -284,19 +240,19 @@ public class Application104 extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		lblAireAlgebrique = new JLabel("Aire Alg\u00E9brique : 3.397u\u00B2");
+		lblAireAlgebrique = new JLabel("Aire Alg\u00E9brique :");
 		lblAireAlgebrique.setBounds(10, 11, 355, 76);
 		panel.add(lblAireAlgebrique);
 		
-		lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireTotaleGeometrique()) + "u\u00B2");
+		lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique : ");
 		lblAireGeometrique.setBounds(10, 87, 355, 76);
 		panel.add(lblAireGeometrique);
 		
-		lblDifference = new JLabel("Diff\u00E9rence : "+ String.format("%.3f", md.getDifferenceUnites()) + "u\u00B2");
+		lblDifference = new JLabel("Diff\u00E9rence : ");
 		lblDifference.setBounds(10, 174, 355, 76);
 		panel.add(lblDifference);
 		
-		lblPourEcart = new JLabel("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
+		lblPourEcart = new JLabel("Pourcentage d'\u00E9cart : ");
 		lblPourEcart.setBounds(10, 261, 340, 76);
 		panel.add(lblPourEcart);
 		
@@ -389,10 +345,13 @@ public class Application104 extends JFrame {
 			public void stateChanged(ChangeEvent e) {
 				//Évenement de la case a cocher
 				if(chckbxRectangle.isSelected()) {
+					System.out.println("SLIDER");
 					md.setNbRectangles((int)sldNbRectangles.getValue());
 					lblNbRectangles.setText(md.getNbRectangles() + "");
 					dessinFonction.setModeleDonnees(md);
+					dessinFonction.repaint();
 					miseAJour();
+					System.out.println(md.getAireTotaleGeometrique());
 				} else {
 					sldNbRectangles.setValue((int)nbRectanglesCourant);
 				}
@@ -428,5 +387,51 @@ public class Application104 extends JFrame {
 		btnResetParametres.setBounds(6, 281, 364, 38);
 		pnParametres.add(btnResetParametres);
 		miseAJour();
+	}
+	
+	/**
+	 * Methode qui met a jour toutes les informations dans l'application 
+	 * Cette méthode sera utilisé dans tous les écouteurs pour faciliter le code
+	 */
+	//Mamadou
+	private void miseAJour() {
+		lblAireAlgebrique.setText("Aire Alg\u00E9brique : " + String.format("%.3f", md.getAireAlg())+"u\u00B2");
+	    lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireTotaleGeometrique()) + "u\u00B2");
+		lblDifference.setText("Diff\u00E9rence : "+String.format("%.3f", md.getDifferenceUnites()) +"u\u00B2");
+		lblPourEcart.setText("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
+		lblNbRectangles.setText(md.getNbRectangles()+"");
+		spnValeurA.setValue(md.getParametreA());
+		spnValeurB.setValue(md.getParametreB());
+		spnValeurC.setValue(md.getParametreC());
+	}
+	/**
+	 * Methode qui verifie si on a bien appuye sur la touche s et que le curseur est bien dans le composant
+	 * @param e l'évenement du clavier
+	 */
+	//Mamadou
+	private void tocheSecrete(KeyEvent e) {
+		if(md.getCurseurDansComposant() && e.getKeyChar() == 's') {
+			//La methode secrete
+			if(premiereFois) {
+				JOptionPane.showMessageDialog(null, "Bonjour,vous avez découvert la touche secrète!" + "\nPour un effet spécial veuillez garder votre curseur dans la fonction et appyuez sur la touche s.\n"
+						+ "Pour arrêter l'effet veuillez simplement sortir votre curseur de la zone de la fonction!" );
+				premiereFois = false;
+			}
+			md.setSecret(true);
+			repaint();
+		}
+	}
+	/**
+	 * Remet les valeurs de md lorsque le curseur rentre dans le dessin
+	 */
+	private void curseurRentre() {
+		md.setCurseurDansComposant(true);
+	}
+	/**
+	 * Remet les valeurs de md lorsque le curseur sort du le dessin
+	 */
+	private void curseurSort() {
+		md.setCurseurDansComposant(false);
+		md.setSecret(false);
 	}
 }
