@@ -190,10 +190,10 @@ public class ModeleDonnees {
 		return(aireTotale);
 	}
 	public double getDifferencePourcentage() {
-		return((this.aireAlg - this.aireGeo)/this.aireAlg * 100.0);
+		return((this.getAireAlg() - this.getAireGeo())/this.getAireAlg() * 100.0);
 	}
 	public double getDifferneceUnites() {
-		return(this.aireAlg - this.aireGeo);
+		return(this.getAireAlg() - this.getAireGeo());
 	}
 	//Recalculer les données 
 	// nbRecet --> recalculer longueur rect, recalculer laire etc..
