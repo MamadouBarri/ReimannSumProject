@@ -298,6 +298,7 @@ public class Application104 extends JFrame {
 		pnParametres.add(lblNbRectangles);
 		
 		sldNbRectangles = new JSlider();
+		sldNbRectangles.setForeground(Color.BLACK);
 		sldNbRectangles.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 					md.setNbRectangles((int)sldNbRectangles.getValue());
