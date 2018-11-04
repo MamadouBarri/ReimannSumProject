@@ -253,12 +253,12 @@ public class Application104 extends JFrame {
 		
 		lblDifferenceNumerique = new JLabel("New label");
 		lblDifferenceNumerique.setBounds(128, 205, 46, 14);
-		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
+		lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferneceUnites()) );
 		panel.add(lblDifferenceNumerique);
 		
 		lblPourcentageNumerique = new JLabel("New label");
 		lblPourcentageNumerique.setBounds(175, 292, 46, 14);
-		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
+		lblPourcentageNumerique.setText(String.format("%.3f",md.getDifferencePourcentage()));
 		panel.add(lblPourcentageNumerique);
 		
 		
@@ -368,7 +368,7 @@ public class Application104 extends JFrame {
 	public  void miseAJour() {
 		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
 		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
-		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
-		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
+		lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferneceUnites()) );
+		lblPourcentageNumerique.setText(String.format("%.3f",md.getDifferencePourcentage()));
 	}
 }
