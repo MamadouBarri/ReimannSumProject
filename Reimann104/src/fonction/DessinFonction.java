@@ -100,7 +100,6 @@ public class DessinFonction extends JPanel {
 		//Dessiner rectangles
 		g2d.setColor(new Color(1f,0.7f,0.75f,0.5f));
 		if(md.getAffficheRectangles()) {
-			g2d.setColor(Color.PINK);
 			for(int k =0;k<md.getNbRectangles();k++) {
 				creerUnRectangle();
 				if(yRectangle <0) {
