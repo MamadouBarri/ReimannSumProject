@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import fonction.DessinFonction;
 import javax.swing.SpinnerNumberModel;
+import java.awt.Color;
 
 /**
  * Classe de l'application qui affiche une fonction et calcule son aire sous la courbe avec la somme de Reimann
@@ -45,6 +46,11 @@ public class Application104 extends JFrame {
 	
 	//Objet du modèle de données
 	private ModeleDonnees md = new ModeleDonnees();
+	private JLabel lblAireAlgNumerique;
+	private JLabel lblAireGeoNumerique;
+	private JLabel lblDifferenceNumerique;
+	private JLabel lblPourcentageNumerique;
+	private JLabel lblNbRectangles;
 	/**
 	 * Demarrage de l'application
 	 */
@@ -60,10 +66,16 @@ public class Application104 extends JFrame {
 			}
 		});
 	}
-	private void miseAJour(){
-		
+	/**
+	 * Methode qui met a jour toutes les informations dans l'application
+	 */
+	//Mamadou
+	public  void miseAJour() {
+		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
+		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
+		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
+		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
 	}
-
 	/**
 	 * Constructeur qui génère l'inferface de l'applicaiton
 	 */
@@ -117,6 +129,7 @@ public class Application104 extends JFrame {
 		btnDroite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnX(1);
+				miseAJour();
 			}
 		});
 		btnDroite.setBounds(632, 615, 40, 40);
@@ -140,6 +153,7 @@ public class Application104 extends JFrame {
 		btnGauche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnX(-1);
+				miseAJour();
 			}
 		});
 		btnGauche.setBounds(74, 615, 40, 40);
@@ -154,6 +168,7 @@ public class Application104 extends JFrame {
 		btnHaut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnY(1);
+				miseAJour();
 			}
 		});
 		btnHaut.setBounds(682, 11, 40, 40);
@@ -168,6 +183,7 @@ public class Application104 extends JFrame {
 		btnBas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.translationEnY(-1);
+				miseAJour();
 			}
 		});
 		btnBas.setBounds(682, 569, 40, 40);
@@ -182,6 +198,7 @@ public class Application104 extends JFrame {
 		btnZoonin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.zoom(-1);
+				miseAJour();
 			}
 		});
 		btnZoonin.setFont(new Font("Tahoma", Font.PLAIN, 35));
@@ -197,6 +214,7 @@ public class Application104 extends JFrame {
 		btnZoomOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dessinFonction.zoom(+1);
+				miseAJour();
 			}
 		});
 		btnZoomOut.setFont(new Font("Tahoma", Font.PLAIN, 35));
@@ -212,18 +230,39 @@ public class Application104 extends JFrame {
 		pnParametres.setLayout(null);
 		
 		JSpinner spnValeurA = new JSpinner();
+		spnValeurA.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				md.setParametreA((double)spnValeurA.getValue());
+				miseAJour();
+				dessinFonction.repaint();
+			}
+		});
 		spnValeurA.setModel(new SpinnerNumberModel(md.getParametreA(), null, null, new Integer(1)));
 		spnValeurA.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurA.setBounds(68, 38, 45, 46);
 		pnParametres.add(spnValeurA);
 		
 		JSpinner spnValeurB = new JSpinner();
+		spnValeurB.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				md.setParametreB((double)spnValeurB.getValue());
+				miseAJour();
+				dessinFonction.repaint();
+			}
+		});
 		spnValeurB.setModel(new SpinnerNumberModel(md.getParametreB(), null, null, new Integer(1)));
 		spnValeurB.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurB.setBounds(189, 38, 45, 46);
 		pnParametres.add(spnValeurB);
 		
 		JSpinner spnValeurC = new JSpinner();
+		spnValeurC.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				md.setParametreC((double)spnValeurC.getValue());
+				miseAJour();
+				dessinFonction.repaint();
+			}
+		});
 		spnValeurC.setModel(new SpinnerNumberModel(md.getParametreC(), null, null, new Integer(1)));
 		spnValeurC.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurC.setBounds(308, 38, 45, 46);
@@ -251,7 +290,19 @@ public class Application104 extends JFrame {
 		pnParametres.add(chckbxRectangle);
 		
 		JSlider sldNbRectangles = new JSlider();
-		sldNbRectangles.setBounds(6, 151, 364, 60);
+		sldNbRectangles.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				md.setNbRectangles((int)sldNbRectangles.getValue());
+				//lblNbRectangles.setText(Integer.toString(md.getNbRectangles()));
+				dessinFonction.repaint();
+			}
+		});
+		sldNbRectangles.setValue(10);
+		sldNbRectangles.setMajorTickSpacing(20);
+		sldNbRectangles.setPaintLabels(true);
+		sldNbRectangles.setMinorTickSpacing(1);
+		sldNbRectangles.setMaximum(200);
+		sldNbRectangles.setBounds(6, 176, 364, 60);
 		pnParametres.add(sldNbRectangles);
 		
 		JButton btnResetParametres = new JButton("R\u00E9initialiser les Param\u00E8tres");
@@ -259,17 +310,14 @@ public class Application104 extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnResetParametres.setBounds(6, 222, 364, 38);
+		btnResetParametres.setBounds(6, 281, 364, 38);
 		pnParametres.add(btnResetParametres);
 		
-		JLabel lblNbSegments = new JLabel("Nombre de Segments sur la courbe:");
-		lblNbSegments.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		lblNbSegments.setBounds(6, 271, 364, 26);
-		pnParametres.add(lblNbSegments);
-		
-		JSlider sldNbSegements = new JSlider();
-		sldNbSegements.setBounds(10, 318, 360, 26);
-		pnParametres.add(sldNbSegements);
+		lblNbRectangles = new JLabel("10");
+		lblNbRectangles.setFont(new Font("Snap ITC", Font.PLAIN, 16));
+		lblNbRectangles.setBackground(Color.WHITE);
+		lblNbRectangles.setBounds(172, 93, 33, 46);
+		pnParametres.add(lblNbRectangles);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "R\u00E9sultats", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -293,22 +341,22 @@ public class Application104 extends JFrame {
 		lblPourEcart.setBounds(10, 261, 136, 76);
 		panel.add(lblPourEcart);
 		
-		JLabel lblAireAlgNumerique = new JLabel("New label");
+		lblAireAlgNumerique = new JLabel("New label");
 		lblAireAlgNumerique.setBounds(141, 42, 46, 14);
 		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
 		panel.add(lblAireAlgNumerique);
 		
-		JLabel lblAireGeoNumerique = new JLabel("New label");
+		lblAireGeoNumerique = new JLabel("New label");
 		lblAireGeoNumerique.setBounds(141, 118, 46, 14);
 		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
 		panel.add(lblAireGeoNumerique);
 		
-		JLabel lblDifferenceNumerique = new JLabel("New label");
+		lblDifferenceNumerique = new JLabel("New label");
 		lblDifferenceNumerique.setBounds(128, 205, 46, 14);
 		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
 		panel.add(lblDifferenceNumerique);
 		
-		JLabel lblPourcentageNumerique = new JLabel("New label");
+		lblPourcentageNumerique = new JLabel("New label");
 		lblPourcentageNumerique.setBounds(175, 292, 46, 14);
 		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
 		panel.add(lblPourcentageNumerique);
