@@ -123,6 +123,8 @@ public class Application104 extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				md.setCurseurDansComposant(false);
+				md.setSecret(false);
+				dessinFonction.repaint();
 			}
 		});
 		dessinFonction.setModeleDonnees(md);
