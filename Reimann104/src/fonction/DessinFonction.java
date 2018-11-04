@@ -43,6 +43,7 @@ public class DessinFonction extends JPanel {
 	private double maxX;
 	private double minY;
 	private double maxY;
+	private double valeurDeZoom;
 	
 	/**
 	 * Constructeur : crée la zone de dessin
@@ -77,7 +78,7 @@ public class DessinFonction extends JPanel {
 		xRectangle = minX + largeurDuRectangle/2.0;
 		posX = (minX-maxX)/2 + largeurDuRectangle/2.0;
 		super.paintComponent(g);	
-		
+
 		Graphics2D g2d = (Graphics2D) g;
 		
 		//Transformations nécessaires pour afficher la fonction
@@ -109,7 +110,6 @@ public class DessinFonction extends JPanel {
 		g2d.setColor(Color.BLUE);
 		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setTransform(atr2);
-		atr2.scale(pixelsParUniteX, pixelsParUniteY);
 		g2d.setColor(Color.BLACK);
 		creerGraduations(g2d);
 	}
@@ -172,27 +172,29 @@ public class DessinFonction extends JPanel {
 	 * Méthode pour créer la grille
 	 */
 	
-	private void creerGraduations(Graphics g) {
+	private void creerGraduations(Graphics2D g) {
 		//création des graduation en X
-		int posX = 0;
+		float posX = 0;
 		int valeurX = (int)md.getMinX();
-		for(int k=0; k<md.getMaxX()-md.getMinX();k++) {
-			g.drawString(valeurX+"", posX, getHeight()/2+10-(int)(valeurDeTranslationEnY*pixelsParUniteY));
+		for(int k=0; k<=md.getMaxX()-md.getMinX();k++) {
+			//dessine la dernière graduation en X
+			if (k==md.getMaxX()-md.getMinX()) {
+				g.drawString(valeurX+"", (float)(posX-19+valeurDeZoom), getHeight()/2+10-(float)(valeurDeTranslationEnY*pixelsParUniteY));
+			}
+			g.drawString(valeurX+"", (float)posX, getHeight()/2+10-(float)(valeurDeTranslationEnY*pixelsParUniteY));
 			valeurX++;
 			posX+=pixelsParUniteX;
 		}
-		//dessine la dernière graduation en X
-		g.drawString(valeurX+"", posX-19, getHeight()/2+10-(int)(valeurDeTranslationEnY*pixelsParUniteY));
 		//création des graduations en Y
-		int posY = 0;
+		float posY = 0;
 		int valeurY = (int)md.getMaxY();
-		//dessine la dernière graduation en Y
-		if(md.getMaxY()!=0) {
-			g.drawString(valeurY+"", getWidth()/2-(int)(valeurDeTranslationEnX*pixelsParUniteX)+5, 12);
-		}
 		for(int i=0; i<=md.getMaxY()-md.getMinY();i++) {
+			//dessine la première graduation en Y
+			if(md.getMaxY()!=0&&i==0) {
+				g.drawString(valeurY+"", getWidth()/2-(float)(valeurDeTranslationEnX*pixelsParUniteX)+5, (float)(12));
+			}
 			if(valeurY!=0||md.getMinY()==0) {
-				g.drawString(valeurY+"", getWidth()/2-(int)(valeurDeTranslationEnX*pixelsParUniteX)+5, posY);
+				g.drawString(valeurY+"", getWidth()/2-(float)(valeurDeTranslationEnX*pixelsParUniteX)+5, (float)posY);
 			}
 			valeurY--;
 			posY+=pixelsParUniteY;
@@ -265,6 +267,7 @@ public class DessinFonction extends JPanel {
 		md.setMinY(md.getMINY());
 		valeurDeTranslationEnX = 0;
 		valeurDeTranslationEnY = 0;
+		valeurDeZoom = 0;
 		repaint();
 	}
 	
@@ -274,6 +277,7 @@ public class DessinFonction extends JPanel {
 			md.setMinX(md.getMinX() - z);
 			md.setMaxY(md.getMaxY() + z);
 			md.setMinY(md.getMinY() - z);
+			valeurDeZoom+=z;
 		}
 		repaint();
 	}
