@@ -276,10 +276,10 @@ public class DessinFonction extends JPanel {
 	}
 	
 	public void resetTranslation() {
-		md.setMaxX(md.getMAXX());
-		md.setMinX(md.getMINX());
-		md.setMaxY(md.getMAXY());
-		md.setMinY(md.getMINY());
+		md.setMaxX(md.getMaxXInitiale());
+		md.setMinX(md.getMinXInitiale());
+		md.setMaxY(md.getMaxYInitiale());
+		md.setMinY(md.getMinYInitiale());
 		valeurDeTranslationEnX = 0;
 		valeurDeTranslationEnY = 0;
 		valeurDeZoom = 0;

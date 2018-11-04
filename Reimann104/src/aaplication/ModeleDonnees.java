@@ -23,14 +23,14 @@ public class ModeleDonnees {
 	
 	
 	//constantes 
-	public double PARAMETRE_A = 2.4;
-	public double PARAMETRE_B = 1.1;
-	public double PARAMETRE_C = 0.8;
-	public double NB_RECTANGLES = 10;
-	private double MIN_X = -5;
-	private double MAX_X = 5;
-	private double MIN_Y = -5;
-	private double MAX_Y = 5;
+	public double parametreAInitiale = 2.4;
+	public double parametreBInitiale = 1.1;
+	public double parametreCInitiale = 0.8;
+	public int nbRectanglesInitiales = 10;
+	private double minXInitiale = -5;
+	private double maxXInitiale = 5;
+	private double minYInitiale = -5;
+	private double maxYInitiale = 5;
 	
 	
 	
@@ -83,29 +83,29 @@ public class ModeleDonnees {
 	public void setAireGeo(double aireGeo) {
 		this.aireGeo = aireGeo;
 	}
-	public void setPARAMETREA(double PARAM_A) {
-		this.PARAMETRE_A = PARAM_A;
+	public void setParametreAInitiale(double PARAM_A) {
+		this.parametreAInitiale = PARAM_A;
 	}
-	public void setPARAMETREB(double PARAM_B) {
-		this.PARAMETRE_B = PARAM_B;
+	public void setParametreBInitiale(double PARAM_B) {
+		this.parametreBInitiale = PARAM_B;
 	}
-	public void setPARAMETREC(double PARAM_C) {
-		this.PARAMETRE_C = PARAM_C;
+	public void setParametreCInitiale(double PARAM_C) {
+		this.parametreCInitiale = PARAM_C;
 	}
-	public void setNBRECTANGLES(double NB_RECT) {
-		this.NB_RECTANGLES = NB_RECT;
+	public void setNbRectanglesInitiales(int NB_RECT) {
+		this.nbRectanglesInitiales = NB_RECT;
 	}
-	public void setMAXX(double X) {
-		this.MAX_X = X;
+	public void setMaxXInitiale(double X) {
+		this.maxXInitiale = X;
 	}
-	public void setMINX(double X) {
-		this.MIN_X = X;
+	public void setMinXInitiale(double X) {
+		this.minXInitiale = X;
 	}
-	public void setMAXY(double Y) {
-		this.MAX_Y = Y;
+	public void setMaxYInitiale(double Y) {
+		this.maxYInitiale = Y;
 	}
-	public void setMINY(double Y) {
-		this.MIN_Y = Y;
+	public void setMinYInitiale(double Y) {
+		this.minYInitiale = Y;
 	}
 	public void setDifferencePourecentage(double differencePourecentage) {
 		this.differencePourcentage = differencePourcentage;
@@ -148,29 +148,29 @@ public class ModeleDonnees {
 	public int getNbLignesBrisees() {
 		return(this.nbLignesBrisees);
 	}
-	public double getPARAMETREA() {
-		return this.PARAMETRE_A;
+	public double getParametreAInitiale() {
+		return this.parametreAInitiale;
 	}
-	public double getPARAMETREB() {
-		return this.PARAMETRE_B;
+	public double getParametreBInitiale() {
+		return this.parametreBInitiale;
 	}
-	public double getPARAMETREC() {
-		return this.PARAMETRE_C;
+	public double getParametreCInitiale() {
+		return this.parametreCInitiale;
 	}
-	public double getNBRECTANGLES() {
-		return this.NB_RECTANGLES;
+	public int getNbRectanglesInitiales() {
+		return this.nbRectanglesInitiales;
 	}
-	public double getMAXX() {
-		return this.MAX_X;
+	public double getMaxXInitiale() {
+		return this.maxXInitiale;
 	}
-	public double getMINX() {
-		return this.MIN_X;
+	public double getMinXInitiale() {
+		return this.minXInitiale;
 	}
-	public double getMAXY() {
-		return this.MAX_Y;
+	public double getMaxYInitiale() {
+		return this.maxYInitiale;
 	}
-	public double getMINY() {
-		return this.MIN_Y;
+	public double getMinYInitiale() {
+		return this.minYInitiale;
 	}
 	public double getAireAlg() {
 		double aireAlgebrique = (this.parametreA * Math.sin(this.maxX) - this.parametreB * Math.cos(this.maxX) + this.parametreC * this.maxX) - (this.parametreA * Math.sin(this.minX) 

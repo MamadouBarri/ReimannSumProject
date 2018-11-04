@@ -53,7 +53,10 @@ public class Application104 extends JFrame {
 	private JLabel lblNbRectangles;
 	private JSlider sldNbRectangles;
 	private JButton btnResetParametres;
-	private JLabel lblAireAlgbrique;
+	private JLabel lblAireAlgebrique;
+	private JLabel lblAireGeometrique;
+	private JLabel lblDifference;
+	private JLabel lblPourEcart;
 	private JPanel panel;
 	private JSpinner spnValeurA;
 	private JSpinner spnValeurB;
@@ -225,42 +228,21 @@ public class Application104 extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		lblAireAlgbrique = new JLabel("Aire Alg\u00E9brique (u\u00B2) :");
-		lblAireAlgbrique.setBounds(10, 11, 121, 76);
-		panel.add(lblAireAlgbrique);
+		lblAireAlgebrique = new JLabel("Aire Alg\u00E9brique : 3.397u\u00B2");
+		lblAireAlgebrique.setBounds(10, 11, 355, 76);
+		panel.add(lblAireAlgebrique);
 		
-		JLabel lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique (u\u00B2) :");
-		lblAireGeometrique.setBounds(10, 87, 121, 76);
+		lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireGeo()) + "u\u00B2");
+		lblAireGeometrique.setBounds(10, 87, 355, 76);
 		panel.add(lblAireGeometrique);
 		
-		JLabel lblDifference = new JLabel("Diff\u00E9rence (u\u00B2) :");
-		lblDifference.setBounds(10, 174, 121, 76);
+		lblDifference = new JLabel("Diff\u00E9rence : "+ String.format("%.3f", md.getDifferneceUnites()) + "u\u00B2");
+		lblDifference.setBounds(10, 174, 355, 76);
 		panel.add(lblDifference);
 		
-		JLabel lblPourEcart = new JLabel("Pourcentage d'\u00E9cart (%) :");
-		lblPourEcart.setBounds(10, 261, 136, 76);
+		lblPourEcart = new JLabel("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
+		lblPourEcart.setBounds(10, 261, 340, 76);
 		panel.add(lblPourEcart);
-		
-		lblAireAlgNumerique = new JLabel("New label");
-		lblAireAlgNumerique.setBounds(141, 42, 46, 14);
-		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
-		panel.add(lblAireAlgNumerique);
-		
-		lblAireGeoNumerique = new JLabel("New label");
-		lblAireGeoNumerique.setBounds(141, 118, 46, 14);
-		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
-		panel.add(lblAireGeoNumerique);
-		
-		lblDifferenceNumerique = new JLabel("New label");
-		lblDifferenceNumerique.setBounds(128, 205, 46, 14);
-		lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferneceUnites()) );
-		panel.add(lblDifferenceNumerique);
-		
-		lblPourcentageNumerique = new JLabel("New label");
-		lblPourcentageNumerique.setBounds(175, 292, 46, 14);
-		lblPourcentageNumerique.setText(String.format("%.3f",md.getDifferencePourcentage()));
-		panel.add(lblPourcentageNumerique);
-		
 		
 		JPanel pnParametres = new JPanel();
 		pnParametres.setBorder(new TitledBorder(null, "Param\u00E8tres", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -354,6 +336,12 @@ public class Application104 extends JFrame {
 		btnResetParametres = new JButton("R\u00E9initialiser les Param\u00E8tres");
 		btnResetParametres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				md.setParametreA(md.getParametreAInitiale());
+				md.setParametreB(md.getParametreBInitiale());
+				md.setParametreC(md.getParametreCInitiale());
+				md.setNbRectangles(md.getNbRectanglesInitiales());
+				dessinFonction.setModeleDonnees(md);
+				miseAJour();
 			}
 		});
 		btnResetParametres.setBounds(6, 281, 364, 38);
@@ -365,10 +353,14 @@ public class Application104 extends JFrame {
 	 * Methode qui met a jour toutes les informations dans l'application
 	 */
 	//Mamadou
-	public  void miseAJour() {
-		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
-		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
-		lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferneceUnites()) );
-		lblPourcentageNumerique.setText(String.format("%.3f",md.getDifferencePourcentage()));
+	public void miseAJour() {
+		lblAireAlgebrique.setText("Aire Alg\u00E9brique : " + String.format("%.3f", md.getAireAlg())+"u\\u00B2");
+	    lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireGeo()) + "u\u00B2");
+		lblDifference.setText("Diff\u00E9rence : "+String.format("%.3f", md.getDifferneceUnites()) +"u\\u00B2");
+		lblPourEcart.setText("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
+		lblNbRectangles.setText(md.getNbRectangles()+"");
+		spnValeurA.setValue(md.getParametreA());
+		spnValeurB.setValue(md.getParametreB());
+		spnValeurC.setValue(md.getParametreC());
 	}
 }
