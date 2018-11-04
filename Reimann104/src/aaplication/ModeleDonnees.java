@@ -175,6 +175,7 @@ public class ModeleDonnees {
 	public double getAireAlg() {
 		double aireAlgebrique = (this.parametreA * Math.sin(this.maxX) - this.parametreB * Math.cos(this.maxX) + this.parametreC * this.maxX) - (this.parametreA * Math.sin(this.minX) 
 				- this.parametreB * Math.cos(this.minX) + this.parametreC * this.minX);
+		this.setAireAlg(aireAlgebrique);
 		return(aireAlgebrique);
 	}
 	public double getAireGeo() {
@@ -187,13 +188,14 @@ public class ModeleDonnees {
 			aireTotale += y * largeurRect;
 			x+=largeurRect;
 		}
+		this.setAireGeo(aireTotale);
 		return(aireTotale);
 	}
 	public double getDifferencePourcentage() {
-		return((this.getAireAlg() - this.getAireGeo())/this.getAireAlg() * 100.0);
+		return((this.aireAlg - this.aireGeo)/this.aireAlg * 100.0);
 	}
 	public double getDifferneceUnites() {
-		return(this.getAireAlg() - this.getAireGeo());
+		return(this.aireAlg - this.aireGeo);
 	}
 	//Recalculer les données 
 	// nbRecet --> recalculer longueur rect, recalculer laire etc..
