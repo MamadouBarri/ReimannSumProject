@@ -1,6 +1,5 @@
 package fonction;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,7 +11,6 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import aaplication.ModeleDonnees;
@@ -28,17 +26,12 @@ public class DessinFonction extends JPanel {
 	private static final long serialVersionUID = 1L;
 	//Object du modele de données
 	private ModeleDonnees md = new ModeleDonnees();
-	//Variables locales pour le dessin
+	//Variables locales pour le dessin dans lesquels on assigne les valeurs du modèle de données
 	private Path2D.Double axes, ligneBrisee,grille;
 	private Rectangle2D.Double rect;
 	private double largeurDuRectangle;
-	private double xRectangle;
-	private double yRectangle;
 	private double valeurDeTranslationEnX;
 	private double valeurDeTranslationEnY;
-	private double valeurDuZoom;
-	private double valeurDuZoomEnX;
-	private double valeurDuZoomEnY;
 	private double pixelsParUniteX;
 	private double pixelsParUniteY;
 	private double posX;
@@ -47,7 +40,6 @@ public class DessinFonction extends JPanel {
 	private double minY;
 	private double maxY;
 	private double valeurDeZoom;
-	
 	/**
 	 * Constructeur : crée la zone de dessin
 	 */
@@ -57,9 +49,8 @@ public class DessinFonction extends JPanel {
 		setLayout(null);
 		//Dessin de la fonction
 	}
-
 	/**
-	 * Dessine la fonction...
+	 * Dessine la fonction avec les axes, les graduations, les lignes brises et les rectangles de la somme de Reimann au besoin.
 	 * @param g Le conexte graphique
 	 */
 	@Override
@@ -72,23 +63,23 @@ public class DessinFonction extends JPanel {
 		this.maxY = md.getMaxY();
 		this.minY = md.getMinY();
 		//Appel des méthodes à chaque repaint
+		//On crée ici les axes, la grille, la fonction et remet à zero l'aire géometrique
+		md.setAireTotaleGeometrique(0);
 		creerAxes();
 		creerApproxCourbe();
 		creerGrille();
 		//Variables calculé à chaque repaint
-		largeurDuRectangle =  (maxX - minX) / (double) md.getNbRectangles();
 		double demiLongueur = getWidth()/2;
 		double demiHauteur = getHeight()/2;
 		this.pixelsParUniteX = getWidth()/(maxX-minX);
 		this.pixelsParUniteY = getHeight()/(maxY-minY);
-		xRectangle = minX + largeurDuRectangle/2.0;
-		posX = (minX-maxX)/2 + largeurDuRectangle/2.0;
+		md.setXRect(minX + md.getLargeurDesRectangles()/2);
+		posX = (minX-maxX)/2 + md.getLargeurDesRectangles()/2.0;
 		super.paintComponent(g);	
 
 		Graphics2D g2d = (Graphics2D) g;
 		
 		//Transformations nécessaires pour afficher la fonction
-		
 		AffineTransform atr2 = g2d.getTransform();
 
 	    g2d.translate(demiLongueur, demiHauteur);
@@ -103,8 +94,26 @@ public class DessinFonction extends JPanel {
 		g2d.draw(atr.createTransformedShape(ligneBrisee));
 		//Dessiner rectangles
 		g2d.setColor(new Color(1f,0.7f,0.75f,0.5f));
+		dessinerTousLesRectangles(g2d, atr);
+		g2d.setColor(Color.BLUE);
+		g2d.draw(atr.createTransformedShape(axes));
+		g2d.setTransform(atr2);
+		g2d.setColor(Color.BLACK);
+		creerGraduations(g2d);
+	}
+
+	/**
+	 * La méthode qui dessine tous les rectangles pour la fonction et qui s'occupe aussi de colorier les rectangles pour la touche secrète
+	 * @param g2d Le contexte grahpique
+	 * @param atr La matrice affine de transformation
+	 */
+	//Mamadou
+	public void dessinerTousLesRectangles(Graphics2D g2d, AffineTransform atr) {
+		Random rand = new Random();
+		Color couleurAleatoire;
 		if(md.getAffficheRectangles()) {
 			for(int k =0;k<md.getNbRectangles();k++) {
+				//La touche secrete
 				if(md.getSecret()) {
 					float a = rand.nextFloat();
 					float b = rand.nextFloat();
@@ -113,7 +122,8 @@ public class DessinFonction extends JPanel {
 					g2d.setColor(couleurAleatoire);
 				}
 				creerUnRectangle();
-				if(yRectangle <0) {
+				//Renvverser lorsque le y est négatif et créer le rectange avec la transformation
+				if(md.getYRect() <0) {
 					g2d.scale(1, -1);
 					g2d.fill(atr.createTransformedShape(rect));
 					g2d.scale(1, -1);
@@ -122,23 +132,26 @@ public class DessinFonction extends JPanel {
 				}
 			}
 		}
-		g2d.setColor(Color.BLUE);
-		g2d.draw(atr.createTransformedShape(axes));
-		g2d.setTransform(atr2);
-		g2d.setColor(Color.BLACK);
-		creerGraduations(g2d);
 	}
-
+	/**
+	 * Méthode qui crée un seul rectangle
+	 */
+	//Mamadou
 	public void creerUnRectangle() {
 		//Dessiner les rectangles
-		yRectangle = this.evalFonction(xRectangle);
+		double largeurRect = md.getLargeurDesRectangles();
+		//yRectangle = md.evalFonction(xRectangle);
+		md.setYRect(md.evalFonction(md.getXRect()));
 		int signe = 1;
-		if(yRectangle<0) {
+		//Lorsque le y est negatif
+		if(md.getYRect()<0) {
 			signe = -1;
 		}
-		rect = new Rectangle2D.Double(posX - largeurDuRectangle/2.0,signe*valeurDeTranslationEnY, largeurDuRectangle, signe *yRectangle);
-		xRectangle +=largeurDuRectangle;
-		posX +=largeurDuRectangle;
+		//On crée le rectangle
+		rect = new Rectangle2D.Double(posX - largeurRect/2.0,signe*valeurDeTranslationEnY, largeurRect, signe *md.getYRect());
+		md.ajouterAireRect();
+		md.setXRect(md.getXRect() + largeurRect);
+		posX +=largeurRect;
 	}
 	/**
 	 * La méthode crée la ligne brisée qui va approximmer l'allure de la fonction
@@ -150,21 +163,19 @@ public class DessinFonction extends JPanel {
 		minX = md.getMinX();
 		double y;
 		double nbLignesBrisees = md.getNbLignesBrisees();
-
 		double posX = this.minX ;
 		ligneBrisee = new Path2D.Double();
 		posX = (minX-maxX)/2;
-		y = this.evalFonction(x);
+		y = md.evalFonction(x);
 		//Tracer l'approximation
 		ligneBrisee.moveTo(posX, y+valeurDeTranslationEnY);
 		for(int k =1; k<=nbLignesBrisees ;k++) {
 			x = minX + k * (maxX-minX)/nbLignesBrisees;
 			posX =(minX-maxX)/2+ k * (maxX-minX)/nbLignesBrisees;
-			y = this.evalFonction(x);
+			y = md.evalFonction(x);
 			ligneBrisee.lineTo(posX, y+valeurDeTranslationEnY);
 		}
 	}
-
 	/**
 	 * La méthode crée les axes de la fonction 
 	 */
@@ -186,17 +197,16 @@ public class DessinFonction extends JPanel {
 	/**
 	 * Méthode pour créer la grille
 	 */
-	
 	private void creerGraduations(Graphics2D g) {
 		//changement de la taille des String selon le zoom appliqué
 		Font currentFont = g.getFont();
-		if(currentFont.getSize() - (float)valeurDeZoom>0) {
-			Font newFont = currentFont.deriveFont(currentFont.getSize() - (float)valeurDeZoom);
-			g.setFont(newFont);
-		} else {
-			Font newFont = currentFont.deriveFont((float)0.09);
-			g.setFont(newFont);
-		}
+			if(currentFont.getSize() - (float)valeurDeZoom>0) {
+				Font newFont = currentFont.deriveFont(currentFont.getSize() - (float)valeurDeZoom);
+				g.setFont(newFont);
+			} else {
+					Font newFont = currentFont.deriveFont((float)0.09);
+					g.setFont(newFont);
+			}
 		//création des graduation en X
 		float posX = 0;
 		int valeurX = (int)md.getMinX();
@@ -252,16 +262,6 @@ public class DessinFonction extends JPanel {
 		repaint();
 	}
 	/**
-	 * Cette méthode prend le x pour une fonction et retourne le résultat
-	 * @param x
-	 * @return Le y de la fonction
-	 */
-	//Mamadou
-	private double evalFonction(double x) {
-			return(md.getParametreA() * Math.cos(x) + md.getParametreB() * Math.sin(x) + md.getParametreC());
-	}
-	
-	/**
 	 * Cette méthode premet la translation de la fonction sur l'axe des x
 	 * @param x translation en horizontale
 	 */
@@ -285,10 +285,10 @@ public class DessinFonction extends JPanel {
 	}
 	
 	public void resetTranslation() {
-		md.setMaxX(md.getMaxXInitiale());
-		md.setMinX(md.getMinXInitiale());
-		md.setMaxY(md.getMaxYInitiale());
-		md.setMinY(md.getMinYInitiale());
+		md.setMaxX(md.getMaxXInitial());
+		md.setMinX(md.getMinXInitial());
+		md.setMaxY(md.getMaxYInitial());
+		md.setMinY(md.getMinYInitial());
 		valeurDeTranslationEnX = 0;
 		valeurDeTranslationEnY = 0;
 		valeurDeZoom = 0;

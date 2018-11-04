@@ -1,6 +1,5 @@
 package aaplication;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,10 +9,8 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.border.TitledBorder;
-import javax.print.DocFlavor.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -32,12 +29,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * Classe de l'application qui affiche une fonction et calcule son aire sous la courbe avec la somme de Reimann
- * @author Mamadou Barri et Gayta, Reiner Luis
+ * L'application qui fait l'illustaration graphique de la méthode de Riemann.
+ * Les  composants suivants sont sur l'interface graphique :le panneau avec les paramètres qu'on peut changer,
+ * le panneau avec les résultats des aires affichés et le dessin de la fontion avec zoom et translation.
+ * @author Mamadou Barri et Gayta Reiner Luis
  *
  */
 public class Application104 extends JFrame {
-
+	/**
+	 * Le ID par défaut
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private java.net.URL  urlHaut = getClass().getClassLoader().getResource("a_haut.png");
 	private java.net.URL  urlBas = getClass().getClassLoader().getResource("a_bas.png");
@@ -48,10 +50,8 @@ public class Application104 extends JFrame {
 	
 	//Objet du modèle de données
 	private ModeleDonnees md = new ModeleDonnees();
-	private JLabel lblAireAlgNumerique;
-	private JLabel lblAireGeoNumerique;
-	private JLabel lblDifferenceNumerique;
-	private JLabel lblPourcentageNumerique;
+	
+	//Les composants de l'interface
 	private JLabel lblNbRectangles;
 	private JSlider sldNbRectangles;
 	private JButton btnResetParametres;
@@ -64,10 +64,9 @@ public class Application104 extends JFrame {
 	private JSpinner spnValeurB;
 	private JSpinner spnValeurC;
 	private JLabel lblFonction;
-	
-	//variables
-	
+	//variable utilisé dans plusieurs méthode
 	private double nbRectanglesCourant;
+	boolean premiereFois = true;
 	/**
 	 * Demarrage de l'application
 	 */
@@ -83,12 +82,57 @@ public class Application104 extends JFrame {
 			}
 		});
 	}
-	
+	/**
+	 * Methode qui met a jour toutes les informations dans l'application 
+	 * Cette méthode sera utilisé dans tous les écouteurs pour faciliter le code
+	 */
+	//Mamadou
+	private void miseAJour() {
+		lblAireAlgebrique.setText("Aire Alg\u00E9brique : " + String.format("%.3f", md.getAireAlg())+"u\u00B2");
+	    lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireTotaleGeometrique()) + "u\u00B2");
+		lblDifference.setText("Diff\u00E9rence : "+String.format("%.3f", md.getDifferenceUnites()) +"u\u00B2");
+		lblPourEcart.setText("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
+		lblNbRectangles.setText(md.getNbRectangles()+"");
+		spnValeurA.setValue(md.getParametreA());
+		spnValeurB.setValue(md.getParametreB());
+		spnValeurC.setValue(md.getParametreC());
+	}
+	/**
+	 * Methode qui verifie si on a bien appuye sur la touche s et que le curseur est bien dans le composant
+	 * @param e l'évenement du clavier
+	 */
+	//Mamadou
+	private void tocheSecrete(KeyEvent e) {
+		if(md.getCurseurDansComposant() && e.getKeyChar() == 's') {
+			//La methode secrete
+			if(premiereFois) {
+				JOptionPane.showMessageDialog(null, "Bonjour,vous avez découvert la touche secrète!" + "\nPour un effet spécial veuillez garder votre curseur dans la fonction et appyuez sur la touche s.\n"
+						+ "Pour arrêter l'effet veuillez simplement sortir votre curseur de la zone de la fonction!" );
+				premiereFois = false;
+			}
+			md.setSecret(true);
+			repaint();
+		}
+	}
+	/**
+	 * Remet les valeurs de md lorsque le curseur rentre dans le dessin
+	 */
+	private void curseurRentre() {
+		md.setCurseurDansComposant(true);
+	}
+	/**
+	 * Remet les valeurs de md lorsque le curseur sort du le dessin
+	 */
+	private void curseurSort() {
+		md.setCurseurDansComposant(false);
+		md.setSecret(false);
+	}
 	/**
 	 * Constructeur qui génère l'inferface de l'applicaiton
 	 */
 	//Reiner
 	public Application104() {
+		
 		setTitle("Somme de Reimann");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1181, 755);
@@ -102,35 +146,37 @@ public class Application104 extends JFrame {
 		pnFonction.setBounds(374, 0, 781, 711);
 		contentPane.add(pnFonction);
 		pnFonction.setLayout(null);
-		
+
+		//Objet du dessin de la fonction
 		DessinFonction dessinFonction = new DessinFonction();
 		dessinFonction.addKeyListener(new KeyAdapter() {
 			@Override
+			//Évenement du clavier
 			public void keyPressed(KeyEvent e) {
-				if(md.getCurseurDansComposant() && e.getKeyChar() == 's') {
-					//La methode secrete
-					md.setSecret(true);
-					repaint();
-				}
+				tocheSecrete(e);
 			}
 		});
 		dessinFonction.addMouseListener(new MouseAdapter() {
 			@Override
+			//Évenemetn lorsque la souris entre dans le composant
 			public void mouseEntered(MouseEvent arg0) {
-				md.setCurseurDansComposant(true);
+				curseurRentre();
 				dessinFonction.requestFocus();
 			}
 			@Override
+			//Évenemetn lorsque la souris entre dans le composant
 			public void mouseExited(MouseEvent e) {
-				md.setCurseurDansComposant(false);
-				md.setSecret(false);
+				curseurSort();
 				dessinFonction.repaint();
 			}
 		});
+		//Set le modèle de donnée pour le dessin de la fonction
 		dessinFonction.setModeleDonnees(md);
 		dessinFonction.setBounds(72, 11, 600, 600);
 		pnFonction.add(dessinFonction);
 		
+		
+		/// **** COMMMENTAIRES images ***
 		if(urlDroite == null) {
 			JOptionPane.showMessageDialog(null, "Fichier a_droite.png introuvable");
 			System.exit(0);
@@ -241,11 +287,11 @@ public class Application104 extends JFrame {
 		lblAireAlgebrique.setBounds(10, 11, 355, 76);
 		panel.add(lblAireAlgebrique);
 		
-		lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireGeo()) + "u\u00B2");
+		lblAireGeometrique = new JLabel("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireTotaleGeometrique()) + "u\u00B2");
 		lblAireGeometrique.setBounds(10, 87, 355, 76);
 		panel.add(lblAireGeometrique);
 		
-		lblDifference = new JLabel("Diff\u00E9rence : "+ String.format("%.3f", md.getDifferneceUnites()) + "u\u00B2");
+		lblDifference = new JLabel("Diff\u00E9rence : "+ String.format("%.3f", md.getDifferenceUnites()) + "u\u00B2");
 		lblDifference.setBounds(10, 174, 355, 76);
 		panel.add(lblDifference);
 		
@@ -304,6 +350,8 @@ public class Application104 extends JFrame {
 		lblFonction.setBounds(15, 38, 355, 46);
 		pnParametres.add(lblFonction);
 		
+		
+		//**** COMMENTAIRES REINER ***
 		JCheckBox chckbxRectangle = new JCheckBox("Rectangles:");
 		chckbxRectangle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -338,11 +386,12 @@ public class Application104 extends JFrame {
 		sldNbRectangles.setForeground(Color.BLACK);
 		sldNbRectangles.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
+				//Évenement de la case a cocher
 				if(chckbxRectangle.isSelected()) {
 					md.setNbRectangles((int)sldNbRectangles.getValue());
 					lblNbRectangles.setText(md.getNbRectangles() + "");
-					miseAJour();
 					dessinFonction.repaint();
+					miseAJour();
 				} else {
 					sldNbRectangles.setValue((int)nbRectanglesCourant);
 				}
@@ -358,16 +407,16 @@ public class Application104 extends JFrame {
 		
 		btnResetParametres = new JButton("R\u00E9initialiser les Param\u00E8tres");
 		btnResetParametres.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				md.setParametreA(md.getParametreAInitiale());
-				md.setParametreB(md.getParametreBInitiale());
-				md.setParametreC(md.getParametreCInitiale());
-				md.setNbRectangles(md.getNbRectanglesInitiales());
+		public void actionPerformed(ActionEvent arg0) {
+				md.setParametreA(md.getParametreAInitial());
+				md.setParametreB(md.getParametreBInitial());
+				md.setParametreC(md.getParametreCInitial());
+				md.setNbRectangles(md.getNbRectanglesInitial());
 				sldNbRectangles.setValue(md.getNbRectangles());
 				dessinFonction.setModeleDonnees(md);
 				miseAJour();
 				if(chckbxRectangle.isSelected()==false) {
-					nbRectanglesCourant = md.getNbRectanglesInitiales();
+					nbRectanglesCourant = md.getNbRectanglesInitial();
 					sldNbRectangles.setValue(md.getNbRectangles());
 					lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : ");
 					lblDifference.setText("Diff\u00E9rence : ");
@@ -377,43 +426,5 @@ public class Application104 extends JFrame {
 		});
 		btnResetParametres.setBounds(6, 281, 364, 38);
 		pnParametres.add(btnResetParametres);
-		
-		
 	}
-	/**
-	 * Methode qui met a jour toutes les informations dans l'application
-	 */
-	//Mamadou
-	public void miseAJour() {
-		lblAireAlgebrique.setText("Aire Alg\u00E9brique : " + String.format("%.3f", md.getAireAlg())+"u\u00B2");
-	    lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : " + String.format("%.3f",  md.getAireGeo()) + "u\u00B2");
-		lblDifference.setText("Diff\u00E9rence : "+String.format("%.3f", md.getDifferneceUnites()) +"u\u00B2");
-		lblPourEcart.setText("Pourcentage d'\u00E9cart : " + String.format("%.3f",md.getDifferencePourcentage()) + "%");
-		lblNbRectangles.setText(md.getNbRectangles()+"");
-		spnValeurA.setValue(md.getParametreA());
-		spnValeurB.setValue(md.getParametreB());
-		spnValeurC.setValue(md.getParametreC());
-	}
-	/**
-	 * Methode qui enleve toutes les composantes graphiques visibles se rapportant aux rectangles
-	 */
-	//Mamadou
-	public void enleverComposantesRectangles() {
-		lblNbRectangles.setVisible(false);
-		sldNbRectangles.setVisible(false);
-		lblAireGeometrique.setVisible(false);
-		lblDifference.setVisible(false);
-		lblPourEcart.setVisible(false);
-	}
-	/**
-	 * Methode qui remet toutes les composantes graphiques visibles se rapportant aux rectangles
-	 */
-	public void remettreComposantesRectangles() {
-		lblNbRectangles.setVisible(true);
-		sldNbRectangles.setVisible(true);
-		lblAireGeometrique.setVisible(true);
-		lblDifference.setVisible(true);
-		lblPourEcart.setVisible(true);
-	}
-
 }
