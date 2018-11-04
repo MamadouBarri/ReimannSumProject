@@ -69,7 +69,6 @@ public class DessinFonction extends JPanel {
 		creerAxes();
 		creerApproxCourbe();
 		creerGrille();
-		creerGraduations();
 		//Variables calculé à chaque repaint
 		largeurDuRectangle =  (maxX - minX) / (double) md.getNbRectangles();
 		double demiLongueur = getWidth()/2;
@@ -78,11 +77,13 @@ public class DessinFonction extends JPanel {
 		this.pixelsParUniteY = getHeight()/(maxY-minY);
 		xRectangle = minX + largeurDuRectangle/2.0;
 		posX = (minX-maxX)/2 + largeurDuRectangle/2.0;
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;	
-
-
+		super.paintComponent(g);	
+		
+		Graphics2D g2d = (Graphics2D) g;
+		
 		//Transformations nécessaires pour afficher la fonction
+		
+		AffineTransform atr2 = g2d.getTransform();
 
 	    g2d.translate(demiLongueur, demiHauteur);
 		AffineTransform atr = new AffineTransform();
@@ -108,9 +109,9 @@ public class DessinFonction extends JPanel {
 				g2d.fill(atr.createTransformedShape(rect));
 			}
 		}
-	}
-	private void creerGraduations() {
-		
+		g2d.setTransform(atr2);
+		g2d.setColor(Color.BLACK);
+		creerGraduations(g2d);
 	}
 
 	public void creerUnRectangle() {
@@ -170,6 +171,20 @@ public class DessinFonction extends JPanel {
 	/**
 	 * Méthode pour créer la grille
 	 */
+	
+	private void creerGraduations(Graphics g) {
+		int posX = 0;
+		int valeurX = (int)md.getMinX();
+		for(int k=0; k<md.getMaxX()-md.getMinX();k++) {
+			g.drawString(valeurX+"", posX, getHeight()/2+10);
+			valeurX++;
+			posX+=pixelsParUniteX;
+		}
+		g.drawString(valeurX+"", posX-14, getHeight()/2+10);
+		
+		
+	}
+	
 	private void creerGrille() {
 		grille = new Path2D.Double();
 		double posX = (minX-maxX)/2;
@@ -229,10 +244,7 @@ public class DessinFonction extends JPanel {
 	}
 	
 	public void resetTranslation() {
-		this.maxX = md.getMaxX();
-		this.minX = md.getMinX();
-		this.maxY = md.getMaxY();
-		this.minY = md.getMinY();
+		
 		valeurDeTranslationEnX = 0;
 		valeurDeTranslationEnY = 0;
 		repaint();
