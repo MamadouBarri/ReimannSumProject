@@ -340,6 +340,7 @@ public class Application104 extends JFrame {
 				md.setParametreB(md.getParametreBInitiale());
 				md.setParametreC(md.getParametreCInitiale());
 				md.setNbRectangles(md.getNbRectanglesInitiales());
+				sldNbRectangles.setValue(md.getNbRectangles());
 				dessinFonction.setModeleDonnees(md);
 				miseAJour();
 			}
