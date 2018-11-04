@@ -98,9 +98,7 @@ public class DessinFonction extends JPanel {
 		g2d.setColor(Color.red);
 		g2d.draw(atr.createTransformedShape(ligneBrisee));
 		//Dessiner rectangles
-		AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-		g2d.setComposite(alcom);
-		g2d.setColor(Color.PINK);
+		g2d.setColor(new Color(1f,0.7f,0.75f,0.5f));
 		for(int k =0;k<md.getNbRectangles();k++) {
 			creerUnRectangle();
 			if(yRectangle <0) {
@@ -115,8 +113,6 @@ public class DessinFonction extends JPanel {
 		g2d.draw(atr.createTransformedShape(axes));
 		g2d.setTransform(atr2);
 		g2d.setColor(Color.BLACK);
-		alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
-		g2d.setComposite(alcom);
 		creerGraduations(g2d);
 	}
 
