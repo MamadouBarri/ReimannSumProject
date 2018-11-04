@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import fonction.DessinFonction;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Classe de l'application qui affiche une fonction et calcule son aire sous la courbe avec la somme de Reimann
@@ -100,6 +102,11 @@ public class Application104 extends JFrame {
 		pnFonction.setLayout(null);
 		
 		DessinFonction dessinFonction = new DessinFonction();
+		dessinFonction.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+			}
+		});
 		dessinFonction.setModeleDonnees(md);
 		dessinFonction.setBounds(72, 11, 600, 600);
 		pnFonction.add(dessinFonction);
@@ -301,7 +308,6 @@ public class Application104 extends JFrame {
 		chckbxRectangle.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		chckbxRectangle.setBounds(6, 101, 135, 26);
 		pnParametres.add(chckbxRectangle);
-		
 		lblNbRectangles = new JLabel("10");
 		lblNbRectangles.setFont(new Font("Snap ITC", Font.PLAIN, 16));
 		lblNbRectangles.setBackground(Color.WHITE);
@@ -309,6 +315,7 @@ public class Application104 extends JFrame {
 		pnParametres.add(lblNbRectangles);
 		
 		sldNbRectangles = new JSlider();
+		sldNbRectangles.setForeground(Color.BLACK);
 		sldNbRectangles.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if(chckbxRectangle.isSelected()) {
