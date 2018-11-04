@@ -398,7 +398,7 @@ public class ModeleDonnees {
 	 * @return pourcentage entre l'aire alg. et geo.
 	 */
 	public double getDifferencePourcentage() {
-		this.setDifferencePourecentage((this.aireAlg - this.aireTotaleGeometrique)/this.aireAlg * 100.0);
+		this.setDifferencePourecentage((this.aireAlg - this.getAireTotaleGeometrique())/this.aireAlg * 100.0);
 		return(differencePourcentage);
 	}
 	/**

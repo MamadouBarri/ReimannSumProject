@@ -313,9 +313,9 @@ public class Application104 extends JFrame {
 				dessinFonction.repaint();
 			}
 		});
-		spnValeurA.setModel(new SpinnerNumberModel(md.getParametreA(), null, null, new Integer(1)));
+		spnValeurA.setModel(new SpinnerNumberModel(new Double(2), null, null, new Double(1)));
 		spnValeurA.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		spnValeurA.setBounds(68, 38, 45, 46);
+		spnValeurA.setBounds(68, 38, 51, 46);
 		pnParametres.add(spnValeurA);
 		
 		spnValeurB = new JSpinner();
@@ -328,7 +328,7 @@ public class Application104 extends JFrame {
 		});
 		spnValeurB.setModel(new SpinnerNumberModel(md.getParametreB(), null, null, new Integer(1)));
 		spnValeurB.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		spnValeurB.setBounds(189, 38, 45, 46);
+		spnValeurB.setBounds(189, 38, 51, 46);
 		pnParametres.add(spnValeurB);
 		
 		spnValeurC = new JSpinner();
@@ -344,7 +344,7 @@ public class Application104 extends JFrame {
 		spnValeurC.setBounds(308, 38, 45, 46);
 		pnParametres.add(spnValeurC);
 		
-		lblFonction = new JLabel("F(x) =            cos(x) +             sin(x) +     ");
+		lblFonction = new JLabel("f(x) =            cos(x) +             sin(x) +     ");
 		lblFonction.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFonction.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblFonction.setBounds(15, 38, 355, 46);
