@@ -51,6 +51,14 @@ public class Application104 extends JFrame {
 	private JLabel lblDifferenceNumerique;
 	private JLabel lblPourcentageNumerique;
 	private JLabel lblNbRectangles;
+	private JSlider sldNbRectangles;
+	private JButton btnResetParametres;
+	private JLabel lblAireAlgbrique;
+	private JPanel panel;
+	private JSpinner spnValeurA;
+	private JSpinner spnValeurB;
+	private JSpinner spnValeurC;
+	private JLabel lblFonction;
 	/**
 	 * Demarrage de l'application
 	 */
@@ -66,16 +74,7 @@ public class Application104 extends JFrame {
 			}
 		});
 	}
-	/**
-	 * Methode qui met a jour toutes les informations dans l'application
-	 */
-	//Mamadou
-	public  void miseAJour() {
-		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
-		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
-		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
-		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
-	}
+	
 	/**
 	 * Constructeur qui génère l'inferface de l'applicaiton
 	 */
@@ -229,7 +228,7 @@ public class Application104 extends JFrame {
 		contentPane.add(pnParametres);
 		pnParametres.setLayout(null);
 		
-		JSpinner spnValeurA = new JSpinner();
+		spnValeurA = new JSpinner();
 		spnValeurA.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				md.setParametreA((double)spnValeurA.getValue());
@@ -242,7 +241,7 @@ public class Application104 extends JFrame {
 		spnValeurA.setBounds(68, 38, 45, 46);
 		pnParametres.add(spnValeurA);
 		
-		JSpinner spnValeurB = new JSpinner();
+		spnValeurB = new JSpinner();
 		spnValeurB.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				md.setParametreB((double)spnValeurB.getValue());
@@ -255,7 +254,7 @@ public class Application104 extends JFrame {
 		spnValeurB.setBounds(189, 38, 45, 46);
 		pnParametres.add(spnValeurB);
 		
-		JSpinner spnValeurC = new JSpinner();
+		spnValeurC = new JSpinner();
 		spnValeurC.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				md.setParametreC((double)spnValeurC.getValue());
@@ -268,7 +267,7 @@ public class Application104 extends JFrame {
 		spnValeurC.setBounds(308, 38, 45, 46);
 		pnParametres.add(spnValeurC);
 		
-		JLabel lblFonction = new JLabel("F(x) =            cos(x) +             sin(x) +     ");
+		lblFonction = new JLabel("F(x) =            cos(x) +             sin(x) +     ");
 		lblFonction.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFonction.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblFonction.setBounds(15, 38, 355, 46);
@@ -289,12 +288,13 @@ public class Application104 extends JFrame {
 		chckbxRectangle.setBounds(6, 101, 135, 26);
 		pnParametres.add(chckbxRectangle);
 		
-		JSlider sldNbRectangles = new JSlider();
+		sldNbRectangles = new JSlider();
 		sldNbRectangles.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				md.setNbRectangles((int)sldNbRectangles.getValue());
-				//lblNbRectangles.setText(Integer.toString(md.getNbRectangles()));
-				dessinFonction.repaint();
+					//lblNbRectangles.setText(md.getNbRectangles() + "");
+					//miseAJour();
+					dessinFonction.repaint();
 			}
 		});
 		sldNbRectangles.setValue(10);
@@ -305,7 +305,7 @@ public class Application104 extends JFrame {
 		sldNbRectangles.setBounds(6, 176, 364, 60);
 		pnParametres.add(sldNbRectangles);
 		
-		JButton btnResetParametres = new JButton("R\u00E9initialiser les Param\u00E8tres");
+		btnResetParametres = new JButton("R\u00E9initialiser les Param\u00E8tres");
 		btnResetParametres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -319,13 +319,13 @@ public class Application104 extends JFrame {
 		lblNbRectangles.setBounds(172, 93, 33, 46);
 		pnParametres.add(lblNbRectangles);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "R\u00E9sultats", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(0, 352, 375, 359);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblAireAlgbrique = new JLabel("Aire Alg\u00E9brique (u\u00B2) :");
+		lblAireAlgbrique = new JLabel("Aire Alg\u00E9brique (u\u00B2) :");
 		lblAireAlgbrique.setBounds(10, 11, 121, 76);
 		panel.add(lblAireAlgbrique);
 		
@@ -360,5 +360,15 @@ public class Application104 extends JFrame {
 		lblPourcentageNumerique.setBounds(175, 292, 46, 14);
 		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
 		panel.add(lblPourcentageNumerique);
+	}
+	/**
+	 * Methode qui met a jour toutes les informations dans l'application
+	 */
+	//Mamadou
+	public  void miseAJour() {
+		lblAireAlgNumerique.setText(String.format("%.3f", md.getAireAlg()));
+		lblAireGeoNumerique.setText(String.format("%.3f",  md.getAireGeo()));
+		//lblDifferenceNumerique.setText(String.format("%.3f", md.getDifferenceNumerique) );
+		//lblPourcentageNumerique.setText(String.format("%.3f",md.getPourecentageNumerique));
 	}
 }
