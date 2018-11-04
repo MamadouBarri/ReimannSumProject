@@ -288,11 +288,17 @@ public class Application104 extends JFrame {
 		chckbxRectangle.setBounds(6, 101, 135, 26);
 		pnParametres.add(chckbxRectangle);
 		
+		lblNbRectangles = new JLabel("10");
+		lblNbRectangles.setFont(new Font("Snap ITC", Font.PLAIN, 16));
+		lblNbRectangles.setBackground(Color.WHITE);
+		lblNbRectangles.setBounds(172, 93, 74, 46);
+		pnParametres.add(lblNbRectangles);
+		
 		sldNbRectangles = new JSlider();
 		sldNbRectangles.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				md.setNbRectangles((int)sldNbRectangles.getValue());
-					//lblNbRectangles.setText(md.getNbRectangles() + "");
+					lblNbRectangles.setText(md.getNbRectangles() + "");
 					//miseAJour();
 					dessinFonction.repaint();
 			}
@@ -312,12 +318,6 @@ public class Application104 extends JFrame {
 		});
 		btnResetParametres.setBounds(6, 281, 364, 38);
 		pnParametres.add(btnResetParametres);
-		
-		lblNbRectangles = new JLabel("10");
-		lblNbRectangles.setFont(new Font("Snap ITC", Font.PLAIN, 16));
-		lblNbRectangles.setBackground(Color.WHITE);
-		lblNbRectangles.setBounds(172, 93, 33, 46);
-		pnParametres.add(lblNbRectangles);
 		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "R\u00E9sultats", TitledBorder.LEADING, TitledBorder.TOP, null, null));
