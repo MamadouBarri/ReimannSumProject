@@ -21,14 +21,14 @@ public class ModeleDonnees {
 	
 	
 	//constantes 
-	private final double PARAMETRE_A = 2.4;
-	private final double PARAMETRE_B = 1.1;
-	private final double PARAMETRE_C = 0.8;
-	private final double NB_RECTANGLES = 10;
-	private final double MIN_X = -5;
-	private final double MAX_X = 5;
-	private final double MIN_Y = -5;
-	private final double MAX_Y = 5;
+	final double PARAMETRE_A = 2.4;
+	final double PARAMETRE_B = 1.1;
+	final double PARAMETRE_C = 0.8;
+	final double NB_RECTANGLES = 10;
+	final double MIN_X = -5;
+	final double MAX_X = 5;
+	final double MIN_Y = -5;
+	final double MAX_Y = 5;
 	
 	
 	
@@ -133,7 +133,6 @@ public class ModeleDonnees {
 		}
 		return(aireTotale);
 	}
-	
 	//Recalculer les données 
 	// nbRecet --> recalculer longueur rect, recalculer laire etc..
 
