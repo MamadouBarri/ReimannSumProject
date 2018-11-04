@@ -60,6 +60,9 @@ public class Application104 extends JFrame {
 			}
 		});
 	}
+	private void miseAJour(){
+		
+	}
 
 	/**
 	 * Constructeur qui génère l'inferface de l'applicaiton

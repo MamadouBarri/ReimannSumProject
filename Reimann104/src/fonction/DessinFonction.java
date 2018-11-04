@@ -31,7 +31,6 @@ public class DessinFonction extends JPanel {
 	private double largeurDuRectangle;
 	private double xRectangle;
 	private double yRectangle;
-	
 	private double valeurDeTranslationEnX;
 	private double valeurDeTranslationEnY;
 	private double valeurDuZoom;
