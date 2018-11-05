@@ -122,7 +122,7 @@ public class Application104 extends JFrame {
 				dessinFonction.requestFocus();
 			}
 			@Override
-			//Évenemetn lorsque la souris entre dans le composant
+			//Évenement lorsque la souris entre dans le composant
 			public void mouseExited(MouseEvent e) {
 				curseurSort();
 				dessinFonction.repaint();
@@ -131,12 +131,12 @@ public class Application104 extends JFrame {
 		dessinFonction.setBounds(72, 11, 600, 600);
 		pnFonction.add(dessinFonction);
 		
-		
-		/// **** COMMMENTAIRES images ***
+		//assure que l'image qu'on désire utlisé existe
 		if(urlDroite == null) {
 			JOptionPane.showMessageDialog(null, "Fichier a_droite.png introuvable");
 			System.exit(0);
 		}
+		//création de l'image
 		ImageIcon droite = new ImageIcon(urlDroite);
 		JButton btnDroite = new JButton(droite);
 		btnDroite.addActionListener(new ActionListener() {
@@ -158,10 +158,12 @@ public class Application104 extends JFrame {
 		btnResetFonction.setBounds(562, 666, 209, 34);
 		pnFonction.add(btnResetFonction);
 		
+		//assure que l'image qu'on désire utlisé existe
 		if(urlGauche == null) {
 			JOptionPane.showMessageDialog(null, "Fichier a_gauche.png introuvable");
 			System.exit(0);
 		}
+		//création de l'image
 		ImageIcon gauche = new ImageIcon(urlGauche);
 		JButton btnGauche = new JButton(gauche);
 		btnGauche.addActionListener(new ActionListener() {
@@ -173,10 +175,12 @@ public class Application104 extends JFrame {
 		btnGauche.setBounds(74, 615, 40, 40);
 		pnFonction.add(btnGauche);
 		
+		//assure que l'image qu'on désire utlisé existe
 		if(urlHaut == null) {
 			JOptionPane.showMessageDialog(null, "Fichier a_haut.png introuvable");
 			System.exit(0);
 		}
+		//création de l'image
 		ImageIcon haut = new ImageIcon(urlHaut);
 		JButton btnHaut = new JButton(haut);
 		btnHaut.addActionListener(new ActionListener() {
@@ -188,10 +192,12 @@ public class Application104 extends JFrame {
 		btnHaut.setBounds(682, 11, 40, 40);
 		pnFonction.add(btnHaut);
 		
+		//assure que l'image qu'on désire utlisé existe
 		if(urlBas == null) {
 			JOptionPane.showMessageDialog(null, "Fichier a_bas.png introuvable");
 			System.exit(0);
 		}
+		//création de l'image
 		ImageIcon bas = new ImageIcon(urlBas);
 		JButton btnBas = new JButton(bas);
 		btnBas.addActionListener(new ActionListener() {
@@ -203,10 +209,12 @@ public class Application104 extends JFrame {
 		btnBas.setBounds(682, 569, 40, 40);
 		pnFonction.add(btnBas);
 		
+		//assure que l'image qu'on désire utlisé existe
 		if(urlZoomIn == null) {
 			JOptionPane.showMessageDialog(null, "Fichier ZoomIn.png introuvable");
 			System.exit(0);
 		}
+		//création de l'image
 		ImageIcon ZoomIn = new ImageIcon(urlZoomIn);
 		JButton btnZoonin = new JButton(ZoomIn);
 		btnZoonin.addActionListener(new ActionListener() {
@@ -219,10 +227,12 @@ public class Application104 extends JFrame {
 		btnZoonin.setBounds(24, 27, 40, 40);
 		pnFonction.add(btnZoonin);
 		
+		//assure que l'image qu'on désire utlisé existe
 		if(urlZoomOut == null) {
 			JOptionPane.showMessageDialog(null, "Fichier ZoomOut.png introuvable");
 			System.exit(0);
 		}
+		//création de l'image
 		ImageIcon ZoomOut = new ImageIcon(urlZoomOut);
 		JButton btnZoomOut = new JButton(ZoomOut);
 		btnZoomOut.addActionListener(new ActionListener() {
@@ -270,7 +280,7 @@ public class Application104 extends JFrame {
 				dessinFonction.repaint();
 			}
 		});
-		spnValeurA.setModel(new SpinnerNumberModel(new Double(2), null, null, new Double(1)));
+		spnValeurA.setModel(new SpinnerNumberModel(2.0, null, null, 1.0));
 		spnValeurA.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurA.setBounds(68, 38, 51, 46);
 		pnParametres.add(spnValeurA);
@@ -283,7 +293,7 @@ public class Application104 extends JFrame {
 				dessinFonction.repaint();
 			}
 		});
-		spnValeurB.setModel(new SpinnerNumberModel(md.getParametreB(), null, null, new Integer(1)));
+		spnValeurB.setModel(new SpinnerNumberModel(md.getParametreB(), null, null, 1));
 		spnValeurB.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurB.setBounds(189, 38, 51, 46);
 		pnParametres.add(spnValeurB);
@@ -296,7 +306,7 @@ public class Application104 extends JFrame {
 				dessinFonction.repaint();
 			}
 		});
-		spnValeurC.setModel(new SpinnerNumberModel(md.getParametreC(), null, null, new Integer(1)));
+		spnValeurC.setModel(new SpinnerNumberModel(md.getParametreC(), null, null, 1));
 		spnValeurC.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spnValeurC.setBounds(308, 38, 45, 46);
 		pnParametres.add(spnValeurC);
@@ -313,20 +323,24 @@ public class Application104 extends JFrame {
 		chckbxRectangle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(chckbxRectangle.isSelected()) {
+					//remet le nombre de rectangles désiré par l'utilisateur avant la désactivation de celles-ci
 					md.setNbRectangles((int)nbRectanglesCourant);
+					//changement du curseur pour illustrer que le curseur changera le nombre de rectangles
 					sldNbRectangles.setForeground(Color.BLACK);
-					md.setAfficheRectangles(true);
+					//assure qu'on affiche les résultats concernant les rectangles
 					miseAJour();
 				}else {
+					//garde le nombre de rectangles souhaité avant la désactivation de celles-ci en mémoire
 					nbRectanglesCourant = md.getNbRectangles();
+					//efface tous les rectangles de la fonction
 					md.setNbRectangles(0);
+					//changement du curseur pour illustrer que le curseur ne changera pas le nombre de rectangles
 					sldNbRectangles.setForeground(Color.LIGHT_GRAY);
-					md.setAfficheRectangles(false);
+					//assure qu'on affiche plus de résultats concernant les rectangles
 					lblAireGeometrique.setText("Aire G\u00E9om\u00E9trique : ");
 					lblDifference.setText("Diff\u00E9rence : ");
 					lblPourEcart.setText("Pourcentage d'\u00E9cart : ");
 				}
-				dessinFonction.repaint();
 			}
 		});
 		chckbxRectangle.setSelected(true);
@@ -345,13 +359,10 @@ public class Application104 extends JFrame {
 			public void stateChanged(ChangeEvent e) {
 				//Évenement de la case a cocher
 				if(chckbxRectangle.isSelected()) {
-					System.out.println("SLIDER");
 					md.setNbRectangles((int)sldNbRectangles.getValue());
 					lblNbRectangles.setText(md.getNbRectangles() + "");
 					dessinFonction.setModeleDonnees(md);
-					dessinFonction.repaint();
 					miseAJour();
-					System.out.println(md.getAireTotaleGeometrique());
 				} else {
 					sldNbRectangles.setValue((int)nbRectanglesCourant);
 				}
@@ -373,6 +384,7 @@ public class Application104 extends JFrame {
 				md.setParametreC(md.getParametreCInitial());
 				md.setNbRectangles(md.getNbRectanglesInitial());
 				sldNbRectangles.setValue(md.getNbRectangles());
+				miseAJour();
 				if(chckbxRectangle.isSelected()==false) {
 					nbRectanglesCourant = md.getNbRectanglesInitial();
 					sldNbRectangles.setValue(md.getNbRectangles());
@@ -380,8 +392,6 @@ public class Application104 extends JFrame {
 					lblDifference.setText("Diff\u00E9rence : ");
 					lblPourEcart.setText("Pourcentage d'\u00E9cart : ");
 				}
-				dessinFonction.setModeleDonnees(md);
-				miseAJour();
 			}
 		});
 		btnResetParametres.setBounds(6, 281, 364, 38);

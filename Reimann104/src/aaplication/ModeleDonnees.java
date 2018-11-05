@@ -377,6 +377,16 @@ public class ModeleDonnees {
 	 * @return l'aire totale geometrique
 	 */
 	public double getAireTotaleGeometrique() {
+		double largeurRect = (this.maxX - this.minX)/this.nbRectangles;
+		double aireTotale = 0;
+		double y;
+		double x = this.minX +  largeurRect/2.0;
+		for(int k= 0;k<this.nbRectangles;k++) {
+			y = this.parametreA*Math.cos(x) + this.parametreB* Math.sin(x) + this.parametreC;
+			aireTotale += y * largeurRect;
+			x+=largeurRect;
+		}
+		this.setAireTotaleGeometrique(aireTotale);
 		return(this.aireTotaleGeometrique);
 	}
 	/**
@@ -438,8 +448,6 @@ public class ModeleDonnees {
 		this.setLargeurDesRectangles((this.maxX - this.minX)/this.nbRectangles);
 		return(this.largeurDesRectangles);
 	}
-	
-	
 	//Methodes speciales qui font des calculs
 	/**
 	 * Cette méthode prend le x pour une fonction et retourne le résultat
@@ -449,13 +457,5 @@ public class ModeleDonnees {
 	//Mamadou
 	public double evalFonction(double x) {
 			return(this.parametreA * Math.cos(x) + this.parametreB * Math.sin(x) + this.parametreC);
-	}
-	/**
-	 * Méthode qui ajoute l'aire de chaque rectangle a l'aire totale afin d'éviter de calculer les coordonées deux fois (cet ajout ce fait lors du dessin de la fonction)
-	 */
-	//Mamadou
-	public void ajouterAireRect() {
-		this.setAireTotaleGeometrique(this.getAireTotaleGeometrique() + this.yRect * this.getLargeurDesRectangles());
-		System.out.println(this.aireTotaleGeometrique);
 	}
 }

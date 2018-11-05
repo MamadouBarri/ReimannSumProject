@@ -145,7 +145,6 @@ public class DessinFonction extends JPanel {
 		}
 		//On crée le rectangle
 		rect = new Rectangle2D.Double(posX - largeurRect/2.0,signe*valeurDeTranslationEnY, largeurRect, signe *md.getYRect());
-		md.ajouterAireRect();
 		md.setXRect(md.getXRect() + largeurRect);
 		posX +=largeurRect;
 	}
@@ -192,19 +191,24 @@ public class DessinFonction extends JPanel {
 	
 	/**
 	 * Méthode pour créer la grille
+	 * @param g l'objet Graphics2D qui sera utilisé pour dessiner les graduations
+	 * @author Gayta
 	 */
 	private void creerGraduations(Graphics2D g) {
+		//variables
+		float posX = 0;
+		float posY = 0;
 		//changement de la taille des String selon le zoom appliqué
 		Font currentFont = g.getFont();
-			if(currentFont.getSize() - (float)valeurDeZoom>0) {
-				Font newFont = currentFont.deriveFont(currentFont.getSize() - (float)valeurDeZoom);
+		//assure que les graduations ne deviennent pas négativent et qu'elles ne disparaissent pas
+		if(currentFont.getSize() - (float)valeurDeZoom>0&&valeurDeZoom<8) {
+			Font newFont = currentFont.deriveFont(currentFont.getSize() - (float)valeurDeZoom);
+			g.setFont(newFont);
+		} else {
+				Font newFont = currentFont.deriveFont(currentFont.getSize() - 8f);
 				g.setFont(newFont);
-			} else {
-					Font newFont = currentFont.deriveFont((float)0.09);
-					g.setFont(newFont);
-			}
+		}
 		//création des graduation en X
-		float posX = 0;
 		int valeurX = (int)md.getMinX();
 		for(int k=0; k<=md.getMaxX()-md.getMinX();k++) {
 			//dessine la dernière graduation en X
@@ -216,7 +220,6 @@ public class DessinFonction extends JPanel {
 			posX+=pixelsParUniteX;
 		}
 		//création des graduations en Y
-		float posY = 0;
 		int valeurY = (int)md.getMaxY();
 		for(int i=0; i<=md.getMaxY()-md.getMinY();i++) {
 			//dessine la première graduation en Y
@@ -231,16 +234,23 @@ public class DessinFonction extends JPanel {
 		}
 		
 	}
-	
+	/**
+	 * Méthode qui crée la grille du dessin de la fonction
+	 * @author Gayta
+	 */
 	private void creerGrille() {
+		//grille
 		grille = new Path2D.Double();
+		//variables représentant les coordonnées où dessiner les grilles
 		double posX = (minX-maxX)/2;
+		double posY = (minY-maxY)/2;
+		//création des grilles verticales
 		for (int k=0;k<=maxX-minX;k++) {
 			grille.moveTo(posX, -(minY-maxY)/2);
 			grille.lineTo(posX, (minY-maxY)/2);
 			posX += 1;
 		}
-		double posY = (minY-maxY)/2;
+		//création des grilles horizontales
 		for (int i=0;i<=maxX-minX;i++) {
 			grille.moveTo((minX-maxX)/2, posY);
 			grille.lineTo(-(minX-maxX)/2, posY);
@@ -259,27 +269,34 @@ public class DessinFonction extends JPanel {
 	}
 	/**
 	 * Cette méthode premet la translation de la fonction sur l'axe des x
-	 * @param x translation en horizontale
+	 * @param x translation en direction horizontale
+	 * @author Gayta
 	 */
-	//Gayta
 	public void translationEnX(int x) {
 		//changement de la partie de la fonction dessinée
 		md.setMaxX(maxX + x);
 		md.setMinX(minX + x);
-		//changement de la position de centre du dessin
+		//Cette variable assure que la partie de la fonction désiré par l'utilisateur soit toujours au centré sur le JPanel
 		this.valeurDeTranslationEnX += x;
 		repaint();
 	}
-	
+	/**
+	 * Cette méthode premet la translation de la fonction sur l'axe des y
+	 * @param y translation en direction verticale
+	 * @author Gayta
+	 */
 	public void translationEnY(int y) {
 		//changement de la partie de la fonction dessinée
 		md.setMaxY(maxY + y);
 		md.setMinY(minY + y);
-		//changement de la position de centre du dessin
+		//Cette variable assure que la partie de la fonction désiré par l'utilisateur soit toujours au centré sur le JPanel
 		this.valeurDeTranslationEnY -= y;
 		repaint();
 	}
-	
+	/**
+	 * Cette méthode remet tous les variables dans le Modele de données qui ont été changé par les méthodes translationEnX, translationEnX et zoom à leur valeurs initiales
+	 * @author Gayta
+	 */
 	public void resetTranslation() {
 		md.setMaxX(md.getMaxXInitial());
 		md.setMinX(md.getMinXInitial());
@@ -290,13 +307,19 @@ public class DessinFonction extends JPanel {
 		valeurDeZoom = 0;
 		repaint();
 	}
-	
+	/**
+	 * Cette méthode permet d'agrandir ou de raptisser la fonction
+	 * @param z valeur indiquant le <<zoom>> affecté sur la fonction par l'utilisateur
+	 * @author Gayta
+	 */
 	public void zoom(double z) {
+		//Assure que la différence entre le minX et le maxX  et celle entre le minY et le maxY ne soit jamais égale à zéro, car on utilise cette différence comme diviseur pour calculer le nombre de pixels par unité
 		if((md.getMaxX() - md.getMinX() + z*2) != 0) {
 			md.setMaxX(md.getMaxX() + z);
 			md.setMinX(md.getMinX() - z);
 			md.setMaxY(md.getMaxY() + z);
 			md.setMinY(md.getMinY() - z);
+			//Cette variable assure que la partie de la fonction désiré par l'utilisateur soit toujours au centré sur le JPanel
 			valeurDeZoom+=z;
 		}
 		repaint();
